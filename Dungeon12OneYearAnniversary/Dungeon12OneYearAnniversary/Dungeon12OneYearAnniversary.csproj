@@ -41,7 +41,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Activity\Game.cs" />
     <Compile Include="Activity\Main.cs" />
+    <Compile Include="Activity\UI.cs" />
+    <Compile Include="Components\Messages.cs" />
     <Compile Include="Heroes\Class.cs" />
     <Compile Include="Heroes\Field.cs" />
     <Compile Include="Heroes\Person.cs" />
@@ -53,11 +56,18 @@
     <Compile Include="IO\DrawerLine.cs" />
     <Compile Include="IO\DrawerOptions.cs" />
     <Compile Include="IO\FileManager.cs" />
-    <Compile Include="Menu\BControl.cs" />
-    <Compile Include="Menu\IControl.cs" />
+    <Compile Include="Controls\BControl.cs" />
+    <Compile Include="Components\Display.cs" />
+    <Compile Include="Controls\IControl.cs" />
+    <Compile Include="Components\Info.cs" />
+    <Compile Include="Map\GameField.cs" />
     <Compile Include="Menu\Input.cs" />
-    <Compile Include="Menu\Option.cs" />
+    <Compile Include="Controls\Option.cs" />
     <Compile Include="Menu\Select.cs" />
+    <Compile Include="Objects\Core\BThing.cs" />
+    <Compile Include="Objects\Core\IThing.cs" />
+    <Compile Include="Objects\Mapped\EThing.cs" />
+    <Compile Include="Objects\Mapped\Rock.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Game\State.cs" />
@@ -65,10 +75,7 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Map\" />
-    <Folder Include="Objects\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

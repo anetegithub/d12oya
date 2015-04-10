@@ -30,8 +30,8 @@ namespace Dungeon12OneYearAnniversary
 
         static void Main(string[] args)
         {
-            Console.SetWindowSize(100, 30);
-            Console.SetBufferSize(100, 30);
+            Console.SetWindowSize(100, 38);
+            Console.SetBufferSize(100, 38);
             Console.CursorVisible = false;
             int xpos = 210;
             int ypos = 170;

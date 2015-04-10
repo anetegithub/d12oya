@@ -30,5 +30,13 @@ namespace Dungeon12OneYearAnniversary.IO
         {
             _Lines.Add(S);
         }
+
+        public void AppendLine(String Text, ConsoleColor Color)
+        {
+            DrawerLine S = new DrawerLine();
+            S.DefaultForegroundColor = Color;
+            S += Text;
+            _Lines.Add(S);
+        }
     }
 }

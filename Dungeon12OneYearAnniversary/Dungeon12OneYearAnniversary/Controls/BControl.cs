@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 using Dungeon12OneYearAnniversary.IO;
 
-namespace Dungeon12OneYearAnniversary.Menu
+namespace Dungeon12OneYearAnniversary.Controls
 {
     internal class BControl : IControl
     {
@@ -24,8 +24,7 @@ namespace Dungeon12OneYearAnniversary.Menu
         }
 
         public void Run()
-        {
-            Console.Clear();
+        {            
             Draw();
             Handle();
         }

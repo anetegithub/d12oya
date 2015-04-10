@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 using Dungeon12OneYearAnniversary.IO;
+using Dungeon12OneYearAnniversary.Controls;
 
 namespace Dungeon12OneYearAnniversary.Menu
 {

@@ -16,6 +16,11 @@ namespace Dungeon12OneYearAnniversary.IO
         { this.Add(DCLine); }
         public DrawerLine(DrawerChar Char)
         { this.Add(Char); }
+        public DrawerLine(String String, ConsoleColor Color)
+        {
+            this.DefaultForegroundColor = Color;
+            this.Add(String);
+        }
 
         private List<DrawerChar> _Chars = new List<DrawerChar>();
 

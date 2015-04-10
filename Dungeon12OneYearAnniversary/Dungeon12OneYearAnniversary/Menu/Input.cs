@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+using Dungeon12OneYearAnniversary.Controls;
 using Dungeon12OneYearAnniversary.IO;
 
 namespace Dungeon12OneYearAnniversary.Menu
