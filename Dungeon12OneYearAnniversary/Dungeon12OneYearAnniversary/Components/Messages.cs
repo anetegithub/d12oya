@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 using Dungeon12OneYearAnniversary.Controls;
 using Dungeon12OneYearAnniversary.IO;
+using Dungeon12OneYearAnniversary.Temp;
 
 namespace Dungeon12OneYearAnniversary.Components
 {
@@ -68,13 +69,19 @@ namespace Dungeon12OneYearAnniversary.Components
 
         public void Message(DrawerLine Msg)
         {
+            Logger.Add(Msg);
+
+            for (int i = Msg.Chars.Count; i < 68; i++)
+                Msg.Chars.Add(new DrawerChar() { Icon = ' ' });
             LastLines.Insert(0, Msg);
             LastLines.RemoveRange(3, 1);
             Draw();
-        }        
+        }
 
         public void MessageMin(DrawerLine Msg)
         {
+            Logger.Add(Msg);
+
             LastMiniLines.Insert(0, Msg);
             LastMiniLines.RemoveRange(3, 1);
             DrawMini();

@@ -97,7 +97,8 @@ namespace Dungeon12OneYearAnniversary.Map
                                 _Map[Coord.X, Coord.Y] = _Map[Coord.X, Coord.Y].Bag;
                             else
                                 _Map[Coord.X, Coord.Y] = new EThing();
-                            _Map[Coord.X, Coord.Y - 1].Bag = _Map[Coord.X, Coord.Y - 1];
+
+                            Temp.Bag = _Map[Coord.X, Coord.Y - 1];
                             _Map[Coord.X, Coord.Y - 1] = Temp;
                             NewValue = new Coord() { X = Coord.X, Y = Coord.Y - 1 };
                         }
@@ -112,7 +113,7 @@ namespace Dungeon12OneYearAnniversary.Map
                                 _Map[Coord.X, Coord.Y] = _Map[Coord.X, Coord.Y].Bag;
                             else
                                 _Map[Coord.X, Coord.Y] = new EThing();
-                            _Map[Coord.X, Coord.Y + 1].Bag = _Map[Coord.X, Coord.Y + 1];
+                            Temp.Bag = _Map[Coord.X, Coord.Y + 1];
                             _Map[Coord.X, Coord.Y + 1] = Temp;
                             NewValue = new Coord() { X = Coord.X, Y = Coord.Y + 1 };
                         }
@@ -127,7 +128,7 @@ namespace Dungeon12OneYearAnniversary.Map
                                 _Map[Coord.X, Coord.Y] = _Map[Coord.X, Coord.Y].Bag;
                             else
                                 _Map[Coord.X, Coord.Y] = new EThing();
-                            _Map[Coord.X - 1, Coord.Y].Bag = _Map[Coord.X - 1, Coord.Y];
+                            Temp.Bag = _Map[Coord.X - 1, Coord.Y];
                             _Map[Coord.X - 1, Coord.Y] = Temp;
                             NewValue = new Coord() { X = Coord.X - 1, Y = Coord.Y };
                         }
@@ -142,7 +143,7 @@ namespace Dungeon12OneYearAnniversary.Map
                                 _Map[Coord.X, Coord.Y] = _Map[Coord.X, Coord.Y].Bag;
                             else
                                 _Map[Coord.X, Coord.Y] = new EThing();
-                            _Map[Coord.X + 1, Coord.Y].Bag = _Map[Coord.X + 1, Coord.Y];
+                            Temp.Bag = _Map[Coord.X + 1, Coord.Y];
                             _Map[Coord.X + 1, Coord.Y] = Temp;
                             NewValue = new Coord() { X = Coord.X + 1, Y = Coord.Y };
                         }
@@ -155,25 +156,35 @@ namespace Dungeon12OneYearAnniversary.Map
 
         public void Activate(Coord CurrentPosition)
         {
-            if(CurrentPosition.X-1>=0)
-            _Map[CurrentPosition.X - 1, CurrentPosition.Y].Action();
+            if (CurrentPosition.X - 1 >= 0)
+                _Map[CurrentPosition.X - 1, CurrentPosition.Y].Action();
             if (CurrentPosition.X + 1 < 69)
-            _Map[CurrentPosition.X + 1, CurrentPosition.Y].Action();
+                _Map[CurrentPosition.X + 1, CurrentPosition.Y].Action();
             if (CurrentPosition.Y - 1 >= 0)
-            _Map[CurrentPosition.X, CurrentPosition.Y - 1].Action();
+                _Map[CurrentPosition.X, CurrentPosition.Y - 1].Action();
             if (CurrentPosition.Y + 1 < 29)
-            _Map[CurrentPosition.X, CurrentPosition.Y + 1].Action();
+                _Map[CurrentPosition.X, CurrentPosition.Y + 1].Action();
+
+            if (CurrentPosition.X - 1 >= 0 && CurrentPosition.Y - 1 >= 0)
+                _Map[CurrentPosition.X - 1, CurrentPosition.Y - 1].Action();
+            if (CurrentPosition.X + 1 <69 && CurrentPosition.Y - 1 >= 0)
+                _Map[CurrentPosition.X + 1, CurrentPosition.Y - 1].Action();
+            if (CurrentPosition.X - 1 >= 0 && CurrentPosition.Y + 1 <29 )
+                _Map[CurrentPosition.X - 1, CurrentPosition.Y + 1].Action();
+            if (CurrentPosition.X + 1 <69 && CurrentPosition.Y + 1 <29)
+                _Map[CurrentPosition.X + 1, CurrentPosition.Y + 1].Action();
         }
 
         public void MoveObjects()
         {
             var Monsters = (from a in Map.Cast<IThing>() where a.GetType().GetInterface("IMonster") != null select a).ToList();
+            Int32 RandomInt = State.Random.Next(2);
             foreach (var Monster in Monsters)
-                Monster.Position = Move(Monster.Position, NextStep(Monster.Position));
+                Monster.Position = Move(Monster.Position, NextStep(Monster.Position, RandomInt: RandomInt));
         }
-        private ConsoleKey NextStep(Coord CurrentPosition)
+        private ConsoleKey NextStep(Coord CurrentPosition,Int32 RandomInt)
         {
-            if (State.Random.Next(2) == 0)
+            if (RandomInt == 0)
             {
                 Coord EnemyPosition = State.Current.Hero.Position;
 
@@ -210,7 +221,7 @@ namespace Dungeon12OneYearAnniversary.Map
 
         public void DropItem(Coord Place)
         {
-            Map[Place.X, Place.Y] = new Objects.Mapped.Gold();
+            Map[Place.X, Place.Y] = Mapped.GetRandom();
             Map[Place.X, Place.Y].Position = Place;
             Draw();
         }

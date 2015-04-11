@@ -25,9 +25,10 @@ namespace Dungeon12OneYearAnniversary.Temp
                     else
                     {
                         Int32 X = State.Random.Next(68), Y = State.Random.Next(29);
-                        if(State.Current.GameField.Map[X,Y].Name=="Nothing")
+                        if (State.Current.GameField.Map[X, Y].Name == "Nothing")
                         {
                             State.Current.GameField.Map[X, Y] = Monster.GetRandom();
+                            State.Current.Msg.Message(new IO.DrawerLine(State.Current.GameField.Map[X, Y].Name + " coming into the lair!", State.Current.GameField.Map[X, Y].Color));
                             State.Current.GameField.Map[X, Y].Position = new Map.Coord() { X = X, Y = Y };
                         }
                     }

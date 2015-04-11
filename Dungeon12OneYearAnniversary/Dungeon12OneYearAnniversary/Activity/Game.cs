@@ -17,6 +17,10 @@ namespace Dungeon12OneYearAnniversary.Activity
             State.Current.GameField.Map[35, 15] = State.Current.Hero;
             State.Current.Hero.Position = new Map.Coord() { X = 35, Y = 15 };
             State.Current.Hero.HeroIcon = '@';
+            State.Current.Hero.MinDmg = 1;
+            State.Current.Hero.MaxDmg = 2;
+            State.Current.Hero.Chp = 100;
+            State.Current.Hero.Mhp = 100;
             State.Current.Hero.HeroColor = ConsoleColor.Red.ToString();
             State.Current.Hero.HeroBack = ConsoleColor.Black.ToString();
 

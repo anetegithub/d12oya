@@ -12,7 +12,10 @@ namespace Dungeon12OneYearAnniversary.Objects.Mapped
     internal sealed class Gold : IThing
     {
         public Gold()
-        { _Gold = State.Random.Next(1,(Int32)(State.Current.Hero.Level.ToInt() * 1.56463)); }
+        {
+            _Gold = State.Random.Next(1, (Int32)(State.Current.Hero.Level.ToInt() * 1.56463));
+            State.Current.Msg.Message(new IO.DrawerLine("Somebody dropped some coins!", ConsoleColor.Yellow));
+        }
 
         private Int32 _Gold;
         public Coord Position { get; set; }
@@ -35,6 +38,7 @@ namespace Dungeon12OneYearAnniversary.Objects.Mapped
             State.Current.GameField.Map[Position.X, Position.Y] = new Objects.Mapped.EThing();
             State.Current.Hero.Gold += _Gold;
             State.Current.Info.Draw();
+            State.Current.GameField.Draw();
         }
     }
 }

@@ -77,18 +77,15 @@ namespace Dungeon12OneYearAnniversary.IO
             public short Right;
             public short Bottom;
         }
-
-        private static DrawerOptions Options = new DrawerOptions();
-        private static DrawerContent Content = new DrawerContent();
-
+        
         [STAThread]
-        public static void Draw()
+        public static void Draw(DrawerContent Content, DrawerOptions Options)
         {
             SafeFileHandle h = CreateFile("CONOUT$", 0x40000000, 2, IntPtr.Zero, FileMode.Open, 0, IntPtr.Zero);
 
             if (!h.IsInvalid)
             {
-                SmallRect rect = Matrix;
+                SmallRect rect = Matrix(Content, Options);
 
                 CharInfo[] buf = new CharInfo[(rect.Right - rect.Left) * (rect.Bottom - rect.Top)];
 
@@ -114,22 +111,19 @@ namespace Dungeon12OneYearAnniversary.IO
             }
         }
 
-        private static SmallRect Matrix
+        private static SmallRect Matrix(DrawerContent Content, DrawerOptions Options)
         {
-            get
+            SmallRect Rect = new SmallRect() { Left = (Int16)Options.Left, Top = (Int16)Options.Top };
+            Int16 x = (Int16)Options.Left, y = (Int16)Options.Top;
+            foreach (var l in Content.Lines)
             {
-                SmallRect Rect = new SmallRect() { Left = (Int16)Options.Left, Top = (Int16)Options.Top };
-                Int16 x = (Int16)Options.Left, y = (Int16)Options.Top;
-                foreach (var l in Content.Lines)
-                {
-                    if (l.Chars.Count + (Int16)Options.Left > x)
-                        x = (Int16)(l.Chars.Count + Options.Left);
-                    y++;
-                }
-                Rect.Right = x;
-                Rect.Bottom = y;
-                return Rect;
+                if (l.Chars.Count + (Int16)Options.Left > x)
+                    x = (Int16)(l.Chars.Count + Options.Left);
+                y++;
             }
+            Rect.Right = x;
+            Rect.Bottom = y;
+            return Rect;
         }
 
         private static Int16 ConvertToAttribute(ConsoleColor Foreground, ConsoleColor Background)
@@ -159,16 +153,7 @@ namespace Dungeon12OneYearAnniversary.IO
         [STAThread]
         public static void Draw(DrawerContent Content)
         {
-            Drawer.Content = Content;
-            Draw();
-        }
-
-        [STAThread]
-        public static void Draw(DrawerContent Content, DrawerOptions Options)
-        {
-            Drawer.Content = Content;
-            Drawer.Options = Options;
-            Draw();
+            Draw(Content, new DrawerOptions());
         }
 
         [STAThread]
@@ -176,9 +161,7 @@ namespace Dungeon12OneYearAnniversary.IO
         {
             DrawerContent Content = new DrawerContent();
             Content.AppendLine(Line);
-            Drawer.Content = Content;
-            Drawer.Options = Options;
-            Draw();
+            Draw(Content, Options);
         }
 
         [STAThread]
@@ -188,9 +171,7 @@ namespace Dungeon12OneYearAnniversary.IO
             DrawerOptions Options = new DrawerOptions() { Left = Left, Top = Top };
             DrawerLine Line = new DrawerLine(Text, Color);
             Content.AppendLine(Line);
-            Drawer.Content = Content;
-            Drawer.Options = Options;
-            Draw();
+            Draw(Content,Options);
         }
     }
 }

@@ -11,6 +11,12 @@ namespace Dungeon12OneYearAnniversary.Objects.Mapped
 {
     internal sealed class Rock : IThing
     {
+        public Rock()
+            : base()
+        {
+            State.Current.Msg.Message(new IO.DrawerLine("From the ceiling fell stone!", ConsoleColor.DarkCyan));
+        }
+
         public Coord Position { get; set; }
         public IThing Bag { get; set; }
         public String Name
@@ -27,7 +33,7 @@ namespace Dungeon12OneYearAnniversary.Objects.Mapped
         { get { return ConsoleColor.Black; } }
         public void Action()
         {
-            State.Current.Msg.Message(new IO.DrawerLine("It's ROCK!", ConsoleColor.DarkGreen));
+            State.Current.Msg.Message(new IO.DrawerLine("It's ROCK!", ConsoleColor.DarkCyan));
         }
     }
 }

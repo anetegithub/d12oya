@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 using Dungeon12OneYearAnniversary.Temp;
 using Dungeon12OneYearAnniversary.IO;
+using Dungeon12OneYearAnniversary.Objects.Mapped;
 
 namespace Dungeon12OneYearAnniversary.Objects.Monsters.Exemples
 {
@@ -14,14 +15,16 @@ namespace Dungeon12OneYearAnniversary.Objects.Monsters.Exemples
         public Rat()
             : base()
         {
-            Chp = (Int32)(State.Current.Hero.Mhp / 10);
-            Mhp = (Int32)(State.Current.Hero.Mhp / 10);
+            Field Chp = 0;
+
+            Chp = (Int32)(State.Current.Hero.Mhp.ToInt() / 10);
+            Mhp = (Int32)(State.Current.Hero.Mhp.ToInt() / 10);
 
             Chp.SetInt((Int32 Prev) =>
                 {
-                    if (Chp.ToInt() - Prev <= 0)
+                    if (this.Chp.ToInt() - Prev <= 0)
                     {
-                        if (this.__Loot != null)
+                        if (this.__Loot != null && this.__Loot.GetType()!=typeof(EThing))
                         {
                             State.Current.Hero.Inventory.Add(__Loot);
 
@@ -35,12 +38,14 @@ namespace Dungeon12OneYearAnniversary.Objects.Monsters.Exemples
                         State.Current.Msg.Message(new DrawerLine("Rat died! You get " + Exp.ToInt().ToString() + " exp!", ConsoleColor.Magenta));
                         State.Current.GameField.Map[Position.X, Position.Y] = new Mapped.EThing();
                         State.Current.Hero.Cexp += Exp.ToInt();
+                        State.Current.GameField.Draw();
+                        State.Current.Info.Draw();
                         return 0;
                     }
                     else
                         return Prev;
                 });
-
+            this.Chp = Chp; ;
             Mdf = (Int32)(State.Current.Hero.Level / 2);
             Pdf = (Int32)(State.Current.Hero.Level);
 
@@ -136,6 +141,7 @@ namespace Dungeon12OneYearAnniversary.Objects.Monsters.Exemples
                 Attack();
             else
                 Bite();
+            State.Current.Info.Draw();
         }
 
         public Field Chp { get; set; }

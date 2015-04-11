@@ -54,7 +54,7 @@ namespace Dungeon12OneYearAnniversary
         {
             if (SetNum == null)
                 SetNum = new List<Func<int, int>>();
-            SetNum.Add(Act);
+            this.SetNum.Add(Act);
         }
 
         public void Get(Func<Double, Double> Act)
@@ -177,18 +177,54 @@ namespace Dungeon12OneYearAnniversary
         { return new Field() { BolValue = b }; }
 
         public static Field operator +(Field F, Int32 I)
-        { return F.NumValue + I; }
+        {
+            if (F.SetNum != null)
+                foreach (var Act in F.SetNum)
+                    I = Act(I);
+            F.NumValue += I;
+            return F;
+        }
         public static Field operator +(Field F, Double D)
-        { return F.DblValue + D; }
+        {
+            if (F.SetDbl != null)
+                foreach (var Act in F.SetDbl)
+                    D = Act(D);
+            F.DblValue += D;
+            return F;
+        }
         public static Field operator +(Field F, String S)
-        { return F.StrValue + S; }
+        {
+            if (F.SetStr != null)
+                foreach (var Act in F.SetStr)
+                    S = Act(S);
+            F.StrValue += S;
+            return F;
+        }
 
         public static Field operator -(Field F, Int32 I)
-        { return F.NumValue - I; }
+        {
+            if (F.SetNum != null)
+                foreach (var Act in F.SetNum)
+                    I = Act(I);
+            F.NumValue -= I;
+            return F;
+        }
         public static Field operator -(Field F, Double D)
-        { return F.DblValue - D; }
+        {
+            if (F.SetDbl != null)
+                foreach (var Act in F.SetDbl)
+                    D = Act(D);
+            F.DblValue -= D;
+            return F;
+        }
         public static Field operator -(Field F, String S)
-        { return F.StrValue.Replace(S, ""); }
+        {
+            if (F.SetStr != null)
+                foreach (var Act in F.SetStr)
+                    S = Act(S);
+            F.StrValue.Replace(S, "");
+            return F;
+        }
 
         public String ToStr()
         { return (String)this; }

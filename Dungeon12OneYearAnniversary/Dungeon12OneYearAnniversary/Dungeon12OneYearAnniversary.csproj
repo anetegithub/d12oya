@@ -69,14 +69,17 @@
     <Compile Include="Objects\Core\BThing.cs" />
     <Compile Include="Objects\Core\IThing.cs" />
     <Compile Include="Objects\Mapped\EThing.cs" />
-    <Compile Include="Objects\Mapped\Gold.cs" />
-    <Compile Include="Objects\Mapped\Rock.cs" />
+    <Compile Include="Objects\Mapped\Other\Gold.cs" />
+    <Compile Include="Objects\Mapped\Mapped.cs" />
+    <Compile Include="Objects\Mapped\Permanent\Rock.cs" />
     <Compile Include="Objects\Monsters\BMonster.cs" />
     <Compile Include="Objects\Monsters\Exemples\Rat.cs" />
     <Compile Include="Objects\Monsters\IMonster.cs" />
     <Compile Include="Objects\Monsters\Monster.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Temp\AttackManager.cs" />
+    <Compile Include="Temp\Logger.cs" />
     <Compile Include="Temp\State.cs" />
     <Compile Include="Temp\TimeManager.cs" />
   </ItemGroup>
