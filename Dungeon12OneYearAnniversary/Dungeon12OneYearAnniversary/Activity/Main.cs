@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 using Dungeon12OneYearAnniversary.Menu;
-using Dungeon12OneYearAnniversary.Game;
+using Dungeon12OneYearAnniversary.Temp;
 using Dungeon12OneYearAnniversary.Heroes;
 using Dungeon12OneYearAnniversary.Controls;
 using Dungeon12OneYearAnniversary.IO;
@@ -31,12 +31,15 @@ namespace Dungeon12OneYearAnniversary.Activity
         private static void NewGameMenu()
         {
             Input i = new Input();
-            i.Title = new Option() { Text = "Hero name:", Back = ConsoleColor.Black, Color = ConsoleColor.Yellow };
+            i.Title = new Option() { Text = "Hero name:", Back = ConsoleColor.Black, Color = ConsoleColor.Magenta };
             i.ForegroundColor = ConsoleColor.Magenta;
             i.BackgroundColor = ConsoleColor.Black;
             i.OnEnter = (String Text) =>
             {
-                State.Current.Hero.Name = Text.Trim();
+                if (Text.Trim() == "")
+                    i.Run();
+                else
+                    State.Current.Hero.HeroName = Text.Trim();
             };
             i.Run();
         }
@@ -114,7 +117,7 @@ namespace Dungeon12OneYearAnniversary.Activity
             Console.Clear();
 
             DrawerContent con = new DrawerContent();
-            con.AppendLine(new DrawerLine("Hero: " + Hero.Name.ToStr()));
+            con.AppendLine(new DrawerLine("Hero: " + Hero.HeroName.ToStr()));
             con.AppendLine(new DrawerLine("Race: " + Hero.Race.ToStr()));
             con.AppendLine(new DrawerLine("Class: " + Hero.Class.ToStr()));
             con.AppendLine(new DrawerLine("Level: " + Hero.Level.ToInt().ToString()));

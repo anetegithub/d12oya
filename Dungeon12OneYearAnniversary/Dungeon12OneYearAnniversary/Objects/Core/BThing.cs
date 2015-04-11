@@ -4,13 +4,16 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-using Dungeon12OneYearAnniversary.Game;
+using Dungeon12OneYearAnniversary.Temp;
 using Dungeon12OneYearAnniversary.IO;
+using Dungeon12OneYearAnniversary.Map;
 
 namespace Dungeon12OneYearAnniversary.Objects
 {
     internal class BThing : IThing
     {
+        public Coord Position { get; set; }
+
         protected Char _Icon;
         public virtual void SetIcon(Char Icon)
         { _Icon = Icon; }
@@ -36,10 +39,16 @@ namespace Dungeon12OneYearAnniversary.Objects
         { get { return _Color; } }
 
         protected ConsoleColor _Back;
-        public virtual void SetBack(ConsoleColor Back)
+        public virtual void SetBag(ConsoleColor Back)
         { _Back = Color; }
         public ConsoleColor Back
         { get { return _Back; } }
+
+        protected IThing _Bag;
+        public virtual void SetBack(IThing Bag)
+        { _Bag = Bag; }
+        public IThing Bag
+        { get { return _Bag; } set { _Bag = value; } }
 
         protected Boolean _IsPassable;
         public virtual void SetPassable(Boolean Passable)

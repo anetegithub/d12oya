@@ -38,7 +38,7 @@ namespace Dungeon12OneYearAnniversary
             SetWindowPos(MyConsole, 0, xpos, ypos, 0, 0, SWP_NOSIZE);
 
             Console.Title = "Dungeon 12 One Year Anniversary";
-            
+
             Start();
 
             Console.ReadLine();
@@ -54,7 +54,10 @@ namespace Dungeon12OneYearAnniversary
     {
         public static Boolean Valid(this Char c)
         {
-            if (c == ',' || c=='\b')
+            if (
+                c == ',' || c == '\b' || c == '.' || c == '~' || c == '`' || c == '!' || c == '@' || c == '"' || c == '#' || c == '№' || c == '$'
+                || c == ';' || c == '%' || c == ':' || c == '^' || c == '*' || c == '\t' || c == '(' || c == ')' || c == '-' || c == '_' || c == '+'
+                || c == '=' || c == '{' || c == '}' || c == '[' || c == ']' || c == '\\' || c == '/' || c == '|' || c == '\'' || c == '<' || c == '>')
                 return false;
             return true;
         }

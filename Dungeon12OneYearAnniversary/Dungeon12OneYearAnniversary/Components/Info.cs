@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using Dungeon12OneYearAnniversary.IO;
 using Dungeon12OneYearAnniversary.Heroes;
 using Dungeon12OneYearAnniversary.Controls;
-using Dungeon12OneYearAnniversary.Game;
+using Dungeon12OneYearAnniversary.Temp;
 
 namespace Dungeon12OneYearAnniversary.Components
 {
@@ -34,7 +34,7 @@ namespace Dungeon12OneYearAnniversary.Components
 
             DrawerContent Content = new DrawerContent();
 
-            Content.AppendLine(Drawer.Spaces((13) - (State.Current.Hero.Name.ToStr().Length / 2)) + State.Current.Hero.Name.ToStr(), ConsoleColor.Magenta);
+            Content.AppendLine(Drawer.Spaces((13) - (State.Current.Hero.HeroName.ToStr().Length / 2)) + State.Current.Hero.HeroName.ToStr(), ConsoleColor.Magenta);
 
             Content.AppendLine();
 

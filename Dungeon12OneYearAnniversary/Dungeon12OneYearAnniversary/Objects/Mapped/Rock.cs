@@ -4,12 +4,15 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-using Dungeon12OneYearAnniversary.Game;
+using Dungeon12OneYearAnniversary.Temp;
+using Dungeon12OneYearAnniversary.Map;
 
 namespace Dungeon12OneYearAnniversary.Objects.Mapped
 {
     internal sealed class Rock : IThing
     {
+        public Coord Position { get; set; }
+        public IThing Bag { get; set; }
         public String Name
         { get { return "Rock"; } }
         public String Info

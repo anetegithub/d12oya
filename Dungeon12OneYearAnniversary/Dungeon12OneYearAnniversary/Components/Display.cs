@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 using Dungeon12OneYearAnniversary.IO;
 using Dungeon12OneYearAnniversary.Controls;
-using Dungeon12OneYearAnniversary.Game;
+using Dungeon12OneYearAnniversary.Temp;
 
 namespace Dungeon12OneYearAnniversary.Components
 {
@@ -35,9 +35,7 @@ namespace Dungeon12OneYearAnniversary.Components
 
         public override void Handle()
         {
-            Console.ReadKey(true);
-            State.Current.Msg.Message(new DrawerLine(DCLine.New("Warning! You are died!!!", ConsoleColor.Red, ConsoleColor.Black)));
-            Run();
+            KeyboardHandler.Handle();
         }
     }
 }

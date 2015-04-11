@@ -8,10 +8,14 @@ using Dungeon12OneYearAnniversary.Heroes;
 using Dungeon12OneYearAnniversary.Components;
 using Dungeon12OneYearAnniversary.Map;
 
-namespace Dungeon12OneYearAnniversary.Game
+namespace Dungeon12OneYearAnniversary.Temp
 {
     internal sealed class State
     {
+        private static Random _Random = new Random();
+        public static Random Random
+        { get { return _Random; } }
+
         private State()
         { }
 

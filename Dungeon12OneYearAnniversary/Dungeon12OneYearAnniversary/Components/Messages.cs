@@ -15,12 +15,14 @@ namespace Dungeon12OneYearAnniversary.Components
         {
             String s = "#";
             String se = "#";
-            for (int i = 0; i < 100; i++)
+            for (int i = 0; i < 70; i++)
             {
                 s += '#';
                 se += ' ';
             }
-            se = se.Substring(0, se.Length - 2) + "#";
+            se = se.Substring(0, se.Length - 1) + "#";
+            s += " ############################";
+            se += " #                          #";
 
             DrawerContent con = new DrawerContent();
             con.AppendLine(new DrawerLine(s, ConsoleColor.DarkGreen));
@@ -36,10 +38,14 @@ namespace Dungeon12OneYearAnniversary.Components
             Drawer.Draw(con, opt);
         }
 
-        public override void Draw()
+        public new void Run()
         {
             DrawTitle();
+            Handle();
+        }
 
+        public override void Draw()
+        {
             DrawerOptions opt = new DrawerOptions() { Left = 2, Top = 34 };
             DrawerContent con = new DrawerContent();
             foreach (var Line in LastLines)
@@ -48,7 +54,17 @@ namespace Dungeon12OneYearAnniversary.Components
 
         }
 
+        public void DrawMini()
+        {
+            DrawerOptions opt = new DrawerOptions() { Left = 74, Top = 34 };
+            DrawerContent con = new DrawerContent();
+            foreach (var Line in LastMiniLines)
+                con.AppendLine(Line);
+            Drawer.Draw(con, opt);
+        }
+
         private List<DrawerLine> LastLines = new List<DrawerLine>() { new DrawerLine(), new DrawerLine(), new DrawerLine() };
+        private List<DrawerLine> LastMiniLines = new List<DrawerLine>() { new DrawerLine(), new DrawerLine(), new DrawerLine() };
 
         public void Message(DrawerLine Msg)
         {
@@ -56,6 +72,13 @@ namespace Dungeon12OneYearAnniversary.Components
             LastLines.RemoveRange(3, 1);
             Draw();
         }        
+
+        public void MessageMin(DrawerLine Msg)
+        {
+            LastMiniLines.Insert(0, Msg);
+            LastMiniLines.RemoveRange(3, 1);
+            DrawMini();
+        }
 
         public override void Handle()
         { }

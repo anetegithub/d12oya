@@ -9,19 +9,19 @@ namespace Dungeon12OneYearAnniversary
     public struct Field
     {
         private String StrValue;
-        private Int64 NumValue;
+        private Int32 NumValue;
         private Double DblValue;
         private Char ChrValue;
         private Boolean BolValue;
 
         private List<Func<Double, Double>> GetDbl;
-        private List<Func<Int64, Int64>> GetNum;
+        private List<Func<Int32, Int32>> GetNum;
         private List<Func<String, String>> GetStr;
         private List<Func<Char, Char>> GetChr;
         private List<Func<Boolean, Boolean>> GetBol;
 
         private List<Func<Double, Double>> SetDbl;
-        private List<Func<Int64, Int64>> SetNum;
+        private List<Func<Int32, Int32>> SetNum;
         private List<Func<String, String>> SetStr;
         private List<Func<Char, Char>> SetChr;
         private List<Func<Boolean, Boolean>> SetBol;
@@ -50,10 +50,10 @@ namespace Dungeon12OneYearAnniversary
                 SetChr = new List<Func<char, char>>();
             SetChr.Add(Act);
         }
-        public void SetInt(Func<Int64, Int64> Act)
+        public void SetInt(Func<Int32, Int32> Act)
         {
             if (SetNum == null)
-                SetNum = new List<Func<long, long>>();
+                SetNum = new List<Func<int, int>>();
             SetNum.Add(Act);
         }
 
@@ -81,10 +81,10 @@ namespace Dungeon12OneYearAnniversary
                 GetChr = new List<Func<char, char>>();
             GetChr.Add(Act);
         }
-        public void GetInt(Func<Int64, Int64> Act)
+        public void GetInt(Func<Int32, Int32> Act)
         {
             if (GetNum == null)
-                GetNum = new List<Func<long, long>>();
+                GetNum = new List<Func<int, int>>();
             GetNum.Add(Act);
         }
 
@@ -116,7 +116,7 @@ namespace Dungeon12OneYearAnniversary
             if (SetChr != null)
                 SetChr.Remove(Func);
         }
-        public void DelInt(Func<Int64, Int64> Func)
+        public void DelInt(Func<Int32, Int32> Func)
         {
             if (GetNum != null)
                 GetNum.Remove(Func);
@@ -124,9 +124,9 @@ namespace Dungeon12OneYearAnniversary
                 SetNum.Remove(Func);
         }
 
-        public static implicit operator Int64(Field F)
+        public static implicit operator Int32(Field F)
         {
-            Int64 Value = F.NumValue;
+            Int32 Value = F.NumValue;
             if (F.GetNum != null)
                 foreach (var Act in F.GetNum)
                     Value = Act(Value);
@@ -165,7 +165,7 @@ namespace Dungeon12OneYearAnniversary
             return Value;
         }
 
-        public static implicit operator Field(Int64 i)
+        public static implicit operator Field(Int32 i)
         { return new Field() { NumValue = i }; }
         public static implicit operator Field(String s)
         { return new Field() { StrValue = s }; }
@@ -176,14 +176,14 @@ namespace Dungeon12OneYearAnniversary
         public static implicit operator Field(Boolean b)
         { return new Field() { BolValue = b }; }
 
-        public static Field operator +(Field F, Int64 I)
+        public static Field operator +(Field F, Int32 I)
         { return F.NumValue + I; }
         public static Field operator +(Field F, Double D)
         { return F.DblValue + D; }
         public static Field operator +(Field F, String S)
         { return F.StrValue + S; }
 
-        public static Field operator -(Field F, Int64 I)
+        public static Field operator -(Field F, Int32 I)
         { return F.NumValue - I; }
         public static Field operator -(Field F, Double D)
         { return F.DblValue - D; }
@@ -194,8 +194,8 @@ namespace Dungeon12OneYearAnniversary
         { return (String)this; }
         public Double ToDbl()
         { return (Double)this; }
-        public Int64 ToInt()
-        { return (Int64)this; }
+        public Int32 ToInt()
+        { return (Int32)this; }
         public Boolean ToBol()
         { return (Boolean)this; }
         public Char ToChr()
@@ -204,27 +204,9 @@ namespace Dungeon12OneYearAnniversary
         public override string ToString()
         {
             StringBuilder sb = new StringBuilder();
-            sb.AppendLine("==========");
-            sb.AppendLine("Strings");
-            sb.AppendLine("Real : " + this.StrValue);
-            sb.AppendLine("Get : " + (String)this);
-            sb.AppendLine("==========");
-            sb.AppendLine("Integer");
-            sb.AppendLine("Real : " + this.NumValue);
-            sb.AppendLine("Get : " + (Int64)this);
-            sb.AppendLine("==========");
-            sb.AppendLine("Double");
-            sb.AppendLine("Real : " + this.DblValue);
-            sb.AppendLine("Get : " + (Double)this);
-            sb.AppendLine("==========");
-            sb.AppendLine("Boolean");
-            sb.AppendLine("Real : " + this.BolValue);
-            sb.AppendLine("Get : " + (Boolean)this);
-            sb.AppendLine("==========");
-            sb.AppendLine("Char");
-            sb.AppendLine("Real : " + this.ChrValue);
-            sb.AppendLine("Get : " + (Char)this);
-            sb.AppendLine("==========");
+
+            sb.AppendLine("S=" + this.StrValue + ";I=" + this.NumValue + ";D=" + this.DblValue + ";B=" + this.BolValue + ";C=" + this.ChrValue);
+            //sb.AppendLine("S=" + this.StrValue + ";I=" + this.NumValue + ";D=" + this.DblValue + ";B=" + this.BolValue + ";C=" + this.ChrValue);
             return sb.ToString();
         }
     }
