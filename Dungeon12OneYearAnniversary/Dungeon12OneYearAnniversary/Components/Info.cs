@@ -73,9 +73,9 @@ namespace Dungeon12OneYearAnniversary.Components
 
             Content.AppendLine();
 
-            S = "Armor : " + State.Current.Hero.Pdf.ToInt().ToString();
+            S = "Armor : " + State.Current.Hero.Armor.ToInt().ToString();
             Content.AppendLine(Drawer.Spaces((13) - (S.Length / 2)) + S, ConsoleColor.DarkCyan);
-            S = "Barier : " + State.Current.Hero.Mdf.ToInt().ToString();
+            S = "Barier : " + State.Current.Hero.Barrier.ToInt().ToString();
             Content.AppendLine(Drawer.Spaces((13) - (S.Length / 2)) + S, ConsoleColor.DarkMagenta);
 
             Content.AppendLine();

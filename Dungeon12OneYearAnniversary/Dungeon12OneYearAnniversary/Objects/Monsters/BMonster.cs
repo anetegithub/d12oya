@@ -5,31 +5,193 @@ using System.Text;
 using System.Threading.Tasks;
 
 using Dungeon12OneYearAnniversary.Map;
+using Dungeon12OneYearAnniversary.Temp;
+using Dungeon12OneYearAnniversary.Objects.Mapped;
+using Dungeon12OneYearAnniversary.IO;
+using Dungeon12OneYearAnniversary.Magic;
+
 
 namespace Dungeon12OneYearAnniversary.Objects.Monsters
 {
-    internal class BMonster : IThing
+    internal class BMonster : ICastable, IFighter, IMagican, IMonster
     {
-        protected virtual IThing Loot { get; set; }
-        protected virtual String _Name { get; set; }
-        protected virtual String _Info { get; set; }
-        protected virtual Char _Icon { get; set; }
-        protected virtual ConsoleColor _Color { get; set; }
-        protected virtual ConsoleColor _Back { get; set; }
-        protected virtual void Activate() { Console.WriteLine("Not emplement!"); }
-
-        public Coord Position { get; set; }
-        public IThing Bag
+        /// <summary>
+        /// Do not forget = Action(){ this.Activate; }
+        /// </summary>
+        /// <param name="HPRate">HeroMhp*this</param>
+        /// <param name="ArmorRate">HeroLvl*this</param>
+        /// <param name="BarrierRate">HeroLvl*this</param>
+        /// <param name="MinDmgRate">HeroLvl*this</param>
+        /// <param name="MaxDmgRate">HeroLvl*this + MinDmg</param>
+        /// <param name="Exp">Exp</param>
+        public BMonster(Double HPRate, Double ArmorRate, Double BarrierRate, Double MinDmgRate, Double MaxDmgRate, Int32 Exp)
         {
-            get { return Loot; }
-            set { Loot = value; }
+            Field Chp = 0;
+
+            Chp = (Int32)(State.Current.Hero.Mhp.ToInt() * HPRate);
+            Mhp = (Int32)(State.Current.Hero.Mhp.ToInt() * HPRate);
+            Ap = 1;
+
+            Loot = new Objects.Mapped.Gold();
+
+            Chp.SetInt((Int32 Prev) =>
+                {
+                    if (this.Chp.ToInt() - Prev <= 0)
+                    {
+                        this.WhenDies();
+                        return 0;
+                    }
+                    else
+                        return Prev;
+                });
+            this.Chp = Chp; ;
+
+            Armor = (Int32)(State.Current.Hero.Level.ToInt() * ArmorRate);
+            Barrier = (Int32)(State.Current.Hero.Level.ToInt() * BarrierRate);
+
+            MinDmg = (Int32)(State.Current.Hero.Level.ToInt() * MinDmgRate);
+            MaxDmg = (Int32)((MinDmg.ToInt() * MaxDmgRate) + MinDmg.ToInt());
+
+            this.Exp = Exp;
         }
-        public String Name { get { return _Name; } }
-        public String Info { get { return _Info; } }
-        public Boolean IsPassable { get { return false; } }
-        public Char Icon { get { return _Icon; } }
-        public ConsoleColor Color { get { return _Color; } }
-        public ConsoleColor Back { get { return _Back; } }
-        public void Action() { Activate(); }
+
+        public Field Chp { get; set; }
+        public Field Mhp { get; set; }
+
+        public Field Ad { get; set; }
+        public Field MinDmg { get; set; }
+        public Field MaxDmg { get; set; }
+
+        public Field Ap { get; set; }
+        public Field MDmg { get; set; }
+
+        public Field Armor { get; set; }
+        public Field Barrier { get; set; }
+
+        public Int32 Exp { get; set; }
+
+        public IThing Loot { get; set; }
+
+        public Int32 Attack(Int32 Armor)
+        {
+            Int32 Dmg = State.Random.Next(MinDmg, MaxDmg);
+            Dmg -= (Int32)(Armor * 0.3);
+            return Dmg < 0 ? 0 : Dmg;
+        }
+        private void Attacking()
+        {
+            Int32 Dmg = Attack(State.Current.Hero.Armor);
+            State.Current.Hero.Chp -= Dmg;
+
+            DrawerLine Line = new DrawerLine();
+            Line.DefaultForegroundColor = ConsoleColor.DarkGreen;
+            Line.DefaultBackgroundColor = ConsoleColor.Black;
+
+            if (this.GetType().GetInterface("IThing") != null)
+                Line += DCLine.New((this as IThing).Name, (this as IThing).Color, (this as IThing).Back);
+            else
+                Line += "Monster";
+
+            Line += " deals ";
+            Line += DCLine.New(Dmg.ToString(), ConsoleColor.White, ConsoleColor.Red);
+            Line += " damage!";
+
+            State.Current.Msg.Message(Line);
+        }
+
+        public Int32 Cast(Int32 Barrier)
+        {
+            Int32 Dmg = MDmg.ToInt() * Ap.ToInt();
+            Dmg -= (Int32)(Barrier * 0.2);
+            return Dmg < 0 ? 0 : Dmg;
+        }
+        private void MagicAttacking()
+        {
+            Int32 Dmg = Cast(State.Current.Hero.Barrier);
+            State.Current.Hero.Chp -= Dmg;
+
+            DrawerLine Line = new DrawerLine();
+            Line.DefaultForegroundColor = ConsoleColor.DarkGreen;
+            Line.DefaultBackgroundColor = ConsoleColor.Black;
+
+            if (this.GetType().GetInterface("IThing") != null)
+                Line += DCLine.New((this as IThing).Name, (this as IThing).Color, (this as IThing).Back);
+            else
+                Line += "Monster";
+
+            Line += " deal ";
+            Line += DCLine.New(Dmg.ToString(), ConsoleColor.White, ConsoleColor.Red);
+            Line += DCLine.New(" magic", ConsoleColor.Magenta, ConsoleColor.White);
+            Line += " damage!";
+
+            State.Current.Msg.Message(Line);
+        }
+        private List<ISpell> Spells = new List<ISpell>();
+        private void Casting()
+        {
+            if (Spells.Count == 0)
+                MagicAttacking();
+            else
+                Spells[State.Random.Next(Spells.Count)].Cast(State.Current.Hero);
+        }
+
+        public void WhenDies()
+        {
+            if (Loot != null && Loot.GetType() != typeof(EThing))
+            {
+                DrawerLine Line = new DrawerLine();
+                Line.DefaultBackgroundColor = ConsoleColor.DarkGreen;
+                Line.DefaultForegroundColor = ConsoleColor.White;
+                Line += DCLine.New("You", State.Current.Hero.Color, State.Current.Hero.Back);
+                Line += " get a ";
+                Line += DCLine.New(Loot.Name, Loot.Color, Loot.Back);
+                Line += " !";
+                State.Current.Msg.Message(Line);
+                Loot.Action();
+            }
+
+            State.Current.Hero.Cexp += Exp;
+
+            if (this.GetType().GetInterface("IThing") != null)
+            {
+                DrawerLine Line = new DrawerLine();
+                Line.DefaultBackgroundColor = ConsoleColor.DarkGreen;
+                Line.DefaultForegroundColor = ConsoleColor.Black;
+                Line += DCLine.New((this as IThing).Name, (this as IThing).Color, (this as IThing).Back);
+                Line += " died! ";
+                Line += DCLine.New("You", State.Current.Hero.Color, State.Current.Hero.Back);
+                Line += " get ";
+                Line += DCLine.New(Exp.ToString(), ConsoleColor.Blue, ConsoleColor.White);
+                Line += " exp!";
+                State.Current.Msg.Message(Line);
+            }
+            else
+                State.Current.Msg.Message(new DrawerLine("Monster died! You get " + Exp.ToString() + " exp!", ConsoleColor.Magenta));
+
+            if (this.GetType().GetInterface("IThing") != null)
+                State.Current.GameField.Map[(this as IThing).Position.X, (this as IThing).Position.Y] = new Mapped.EThing();
+
+            State.Current.GameField.Draw();
+            State.Current.Info.Draw();
+        }
+
+        public void Activate()
+        {
+            if (State.Random.Next(2) == 0)
+                Attacking();
+            else if (MDmg.ToInt() != 0)
+                Casting();
+            else
+                Attacking();
+            State.Current.Info.Draw();
+        }
+
+        ~BMonster()
+        {
+            if (this.GetType().GetInterface("IThing") != null)
+                State.Current.Msg.Message(new IO.DrawerLine((this as IThing).Name + " corpse disappeared", ConsoleColor.DarkGreen));
+            else
+                State.Current.Msg.Message(new IO.DrawerLine("Some corpse disappeared", ConsoleColor.DarkGreen));
+        }
     }
 }

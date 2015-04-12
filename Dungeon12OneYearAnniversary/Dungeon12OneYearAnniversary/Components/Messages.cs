@@ -12,6 +12,24 @@ namespace Dungeon12OneYearAnniversary.Components
 {
     internal sealed class Messages : BControl
     {
+        public Messages()
+        {
+            LastLines = new List<DrawerLine>();
+            LastMiniLines = new List<DrawerLine>();
+            for(int i=0;i<10;i++)
+            {
+                LastLines.Add(new DrawerLine());
+                LastMiniLines.Add(new DrawerLine());
+            }
+        }
+
+        public void DrawTitleCustom()
+        {
+            DrawTitle();
+            Draw();
+            DrawMini();
+        }
+
         protected override void DrawTitle()
         {
             String s = "#";
@@ -27,6 +45,13 @@ namespace Dungeon12OneYearAnniversary.Components
 
             DrawerContent con = new DrawerContent();
             con.AppendLine(new DrawerLine(s, ConsoleColor.DarkGreen));
+            con.AppendLine(new DrawerLine(se, ConsoleColor.DarkGreen));
+            con.AppendLine(new DrawerLine(se, ConsoleColor.DarkGreen));
+            con.AppendLine(new DrawerLine(se, ConsoleColor.DarkGreen));
+            con.AppendLine(new DrawerLine(se, ConsoleColor.DarkGreen));
+            con.AppendLine(new DrawerLine(se, ConsoleColor.DarkGreen));
+            con.AppendLine(new DrawerLine(se, ConsoleColor.DarkGreen));
+            con.AppendLine(new DrawerLine(se, ConsoleColor.DarkGreen));
             con.AppendLine(new DrawerLine(se, ConsoleColor.DarkGreen));
             con.AppendLine(new DrawerLine(se, ConsoleColor.DarkGreen));
             con.AppendLine(new DrawerLine(se, ConsoleColor.DarkGreen));
@@ -64,8 +89,8 @@ namespace Dungeon12OneYearAnniversary.Components
             Drawer.Draw(con, opt);
         }
 
-        private List<DrawerLine> LastLines = new List<DrawerLine>() { new DrawerLine(), new DrawerLine(), new DrawerLine() };
-        private List<DrawerLine> LastMiniLines = new List<DrawerLine>() { new DrawerLine(), new DrawerLine(), new DrawerLine() };
+        private List<DrawerLine> LastLines;
+        private List<DrawerLine> LastMiniLines;
 
         public void Message(DrawerLine Msg)
         {
@@ -74,7 +99,7 @@ namespace Dungeon12OneYearAnniversary.Components
             for (int i = Msg.Chars.Count; i < 68; i++)
                 Msg.Chars.Add(new DrawerChar() { Icon = ' ' });
             LastLines.Insert(0, Msg);
-            LastLines.RemoveRange(3, 1);
+            LastLines.RemoveRange(10, 1);
             Draw();
         }
 
@@ -83,7 +108,7 @@ namespace Dungeon12OneYearAnniversary.Components
             Logger.Add(Msg);
 
             LastMiniLines.Insert(0, Msg);
-            LastMiniLines.RemoveRange(3, 1);
+            LastMiniLines.RemoveRange(10, 1);
             DrawMini();
         }
 

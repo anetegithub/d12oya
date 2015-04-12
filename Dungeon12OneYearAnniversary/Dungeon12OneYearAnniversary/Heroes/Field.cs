@@ -8,159 +8,180 @@ namespace Dungeon12OneYearAnniversary
 {
     public struct Field
     {
+        public Guid Id;
+        public void IsId()
+        {
+            if(this.Id==default(Guid))
+                this.Id=Guid.NewGuid();
+        }
         private String StrValue;
         private Int32 NumValue;
         private Double DblValue;
         private Char ChrValue;
         private Boolean BolValue;
 
-        private List<Func<Double, Double>> GetDbl;
-        private List<Func<Int32, Int32>> GetNum;
-        private List<Func<String, String>> GetStr;
-        private List<Func<Char, Char>> GetChr;
-        private List<Func<Boolean, Boolean>> GetBol;
+        private static List<Tuple<Guid, Func<Double, Double>>> GetDbl;
+        private static List<Tuple<Guid, Func<Int32, Int32>>> GetNum;
+        private static List<Tuple<Guid, Func<String, String>>> GetStr;
+        private static List<Tuple<Guid, Func<Char, Char>>> GetChr;
+        private static List<Tuple<Guid, Func<Boolean, Boolean>>> GetBol;
 
-        private List<Func<Double, Double>> SetDbl;
-        private List<Func<Int32, Int32>> SetNum;
-        private List<Func<String, String>> SetStr;
-        private List<Func<Char, Char>> SetChr;
-        private List<Func<Boolean, Boolean>> SetBol;
+        private static List<Tuple<Guid, Func<Double, Double>>> SetDbl;
+        private static List<Tuple<Guid, Func<Int32, Int32>>> SetNum;
+        private static List<Tuple<Guid, Func<String, String>>> SetStr;
+        private static List<Tuple<Guid, Func<Char, Char>>> SetChr;
+        private static List<Tuple<Guid, Func<Boolean, Boolean>>> SetBol;
 
         public void Set(Func<String, String> Act)
         {
+            IsId();
             if (SetStr == null)
-                SetStr = new List<Func<string, string>>();
-            SetStr.Add(Act);
+                SetStr = new List<Tuple<Guid, Func<string, string>>>();
+            SetStr.Add(new Tuple<Guid,Func<String,String>>(this.Id,Act));
         }
         public void Set(Func<Double, Double> Act)
         {
+            IsId();
             if (SetDbl == null)
-                SetDbl = new List<Func<double, double>>();
-            SetDbl.Add(Act);
+                SetDbl = new List<Tuple<Guid, Func<double, double>>>();
+            SetDbl.Add(new Tuple<Guid, Func<double, double>>(this.Id, Act));
         }
         public void Set(Func<Boolean, Boolean> Act)
         {
+            IsId();
             if (SetBol == null)
-                SetBol = new List<Func<bool, bool>>();
-            SetBol.Add(Act);
+                SetBol = new List<Tuple<Guid, Func<bool, bool>>>();
+            SetBol.Add(new Tuple<Guid, Func<bool, bool>>(this.Id, Act));
         }
         public void SetChar(Func<Char, Char> Act)
         {
+            IsId();
             if (SetChr == null)
-                SetChr = new List<Func<char, char>>();
-            SetChr.Add(Act);
+                SetChr = new List<Tuple<Guid, Func<char, char>>>();
+            SetChr.Add(new Tuple<Guid, Func<char, char>>(this.Id, Act));
         }
         public void SetInt(Func<Int32, Int32> Act)
         {
+            IsId();
             if (SetNum == null)
-                SetNum = new List<Func<int, int>>();
-            this.SetNum.Add(Act);
+                SetNum = new List<Tuple<Guid, Func<int, int>>>();
+            SetNum.Add(new Tuple<Guid, Func<int, int>>(this.Id, Act));
         }
 
-        public void Get(Func<Double, Double> Act)
-        {
-            if (GetDbl == null)
-                GetDbl = new List<Func<double, double>>();
-            GetDbl.Add(Act);
-        }
         public void Get(Func<String, String> Act)
         {
+            IsId();
             if (GetStr == null)
-                GetStr = new List<Func<string, string>>();
-            GetStr.Add(Act);
+                GetStr = new List<Tuple<Guid, Func<string, string>>>();
+            GetStr.Add(new Tuple<Guid, Func<String, String>>(this.Id, Act));
+        }
+        public void Get(Func<Double, Double> Act)
+        {
+            IsId();
+            if (GetDbl == null)
+                GetDbl = new List<Tuple<Guid, Func<double, double>>>();
+            GetDbl.Add(new Tuple<Guid, Func<double, double>>(this.Id, Act));
         }
         public void Get(Func<Boolean, Boolean> Act)
         {
+            IsId();
             if (GetBol == null)
-                GetBol = new List<Func<bool, bool>>();
-            GetBol.Add(Act);
+                GetBol = new List<Tuple<Guid, Func<bool, bool>>>();
+            GetBol.Add(new Tuple<Guid, Func<bool, bool>>(this.Id, Act));
         }
         public void GetChar(Func<Char, Char> Act)
         {
+            IsId();
             if (GetChr == null)
-                GetChr = new List<Func<char, char>>();
-            GetChr.Add(Act);
+                GetChr = new List<Tuple<Guid, Func<char, char>>>();
+            GetChr.Add(new Tuple<Guid, Func<char, char>>(this.Id, Act));
         }
         public void GetInt(Func<Int32, Int32> Act)
         {
+            IsId();
             if (GetNum == null)
-                GetNum = new List<Func<int, int>>();
-            GetNum.Add(Act);
+                GetNum = new List<Tuple<Guid, Func<int, int>>>();
+            GetNum.Add(new Tuple<Guid, Func<int, int>>(this.Id, Act));
         }
 
         public void Del(Func<Double, Double> Func)
         {
+            Guid This = this.Id;
             if (GetDbl != null)
-                GetDbl.Remove(Func);
+                GetDbl.Remove(GetDbl.First(x => x.Item1 == This && x.Item2 == Func));
             if (SetDbl != null)
-                SetDbl.Remove(Func);
+                SetDbl.Remove(GetDbl.First(x => x.Item1 == This && x.Item2 == Func));
         }
         public void Del(Func<String, String> Func)
         {
+            Guid This = this.Id;
             if (GetStr != null)
-                GetStr.Remove(Func);
+                GetStr.Remove(GetStr.First(x => x.Item1 == This && x.Item2 == Func));
             if (SetStr != null)
-                SetStr.Remove(Func);
+                SetStr.Remove(SetStr.First(x => x.Item1 == This && x.Item2 == Func));
         }
         public void Del(Func<Boolean, Boolean> Func)
         {
+            Guid This = this.Id;
             if (GetBol != null)
-                GetBol.Remove(Func);
+                GetBol.Remove(GetBol.First(x => x.Item1 == This && x.Item2 == Func));
             if (SetBol != null)
-                SetBol.Remove(Func);
+                SetBol.Remove(SetBol.First(x => x.Item1 == This && x.Item2 == Func));
         }
         public void DelChar(Func<Char, Char> Func)
         {
+            Guid This = this.Id;
             if (GetChr != null)
-                GetChr.Remove(Func);
+                GetChr.Remove(GetChr.First(x => x.Item1 == This && x.Item2 == Func));
             if (SetChr != null)
-                SetChr.Remove(Func);
+                SetChr.Remove(SetChr.First(x => x.Item1 == This && x.Item2 == Func));
         }
         public void DelInt(Func<Int32, Int32> Func)
         {
+            Guid This = this.Id;
             if (GetNum != null)
-                GetNum.Remove(Func);
+                GetNum.Remove(GetNum.First(x => x.Item1 == This && x.Item2 == Func));
             if (SetNum != null)
-                SetNum.Remove(Func);
+                SetNum.Remove(SetNum.First(x => x.Item1 == This && x.Item2 == Func));
         }
 
         public static implicit operator Int32(Field F)
         {
             Int32 Value = F.NumValue;
-            if (F.GetNum != null)
-                foreach (var Act in F.GetNum)
+            if (GetNum != null)
+                foreach (var Act in (from a in GetNum where a.Item1 == F.Id select a.Item2))
                     Value = Act(Value);
             return Value;
         }
         public static implicit operator String(Field F)
         {
             String Value = F.StrValue;
-            if (F.GetStr != null)
-                foreach (var Act in F.GetStr)
+            if (GetStr != null)
+                foreach (var Act in (from a in GetStr where a.Item1 == F.Id select a.Item2))
                     Value = Act(Value);
             return Value;
         }
         public static implicit operator Double(Field F)
         {
             Double Value = F.DblValue;
-            if (F.GetDbl != null)
-                foreach (var Act in F.GetDbl)
+            if (GetDbl != null)
+                foreach (var Act in (from a in GetDbl where a.Item1 == F.Id select a.Item2))
                     Value = Act(Value);
             return Value;
         }
         public static implicit operator Boolean(Field F)
         {
             Boolean Value = F.BolValue;
-            if (F.GetBol != null)
-                foreach (var Act in F.GetBol)
+            if (GetBol != null)
+                foreach (var Act in (from a in GetBol where a.Item1 == F.Id select a.Item2))
                     Value = Act(Value);
             return Value;
         }
         public static implicit operator Char(Field F)
         {
             Char Value = F.ChrValue;
-            if (F.GetChr != null)
-                foreach (var Act in F.GetChr)
+            if (GetChr != null)
+                foreach (var Act in (from a in GetChr where a.Item1 == F.Id select a.Item2))
                     Value = Act(Value);
             return Value;
         }
@@ -178,51 +199,83 @@ namespace Dungeon12OneYearAnniversary
 
         public static Field operator +(Field F, Int32 I)
         {
-            if (F.SetNum != null)
-                foreach (var Act in F.SetNum)
+            if (SetNum != null)
+                foreach (var Act in (from a in SetNum where a.Item1 == F.Id select a.Item2))
                     I = Act(I);
             F.NumValue += I;
             return F;
         }
         public static Field operator +(Field F, Double D)
         {
-            if (F.SetDbl != null)
-                foreach (var Act in F.SetDbl)
+            if (SetDbl != null)
+                foreach (var Act in (from a in SetDbl where a.Item1 == F.Id select a.Item2))
                     D = Act(D);
             F.DblValue += D;
             return F;
         }
         public static Field operator +(Field F, String S)
         {
-            if (F.SetStr != null)
-                foreach (var Act in F.SetStr)
+            if (SetStr != null)
+                foreach (var Act in (from a in SetStr where a.Item1 == F.Id select a.Item2))
                     S = Act(S);
             F.StrValue += S;
+            return F;
+        }
+        public static Field operator +(Field F, Boolean B)
+        {
+            if (SetBol != null)
+                foreach (var Act in (from a in SetBol where a.Item1 == F.Id select a.Item2))
+                    B = Act(B);
+            F.BolValue = B;
+            return F;
+        }
+        public static Field operator +(Field F, Char C)
+        {
+            if (SetChr != null)
+                foreach (var Act in (from a in SetChr where a.Item1 == F.Id select a.Item2))
+                    C = Act(C);
+            F.ChrValue = C;
             return F;
         }
 
         public static Field operator -(Field F, Int32 I)
         {
-            if (F.SetNum != null)
-                foreach (var Act in F.SetNum)
+            if (SetNum != null)
+                foreach (var Act in (from a in SetNum where a.Item1 == F.Id select a.Item2))
                     I = Act(I);
             F.NumValue -= I;
             return F;
         }
         public static Field operator -(Field F, Double D)
         {
-            if (F.SetDbl != null)
-                foreach (var Act in F.SetDbl)
+            if (SetDbl != null)
+                foreach (var Act in (from a in SetDbl where a.Item1 == F.Id select a.Item2))
                     D = Act(D);
             F.DblValue -= D;
             return F;
         }
         public static Field operator -(Field F, String S)
         {
-            if (F.SetStr != null)
-                foreach (var Act in F.SetStr)
+            if (SetStr != null)
+                foreach (var Act in (from a in SetStr where a.Item1 == F.Id select a.Item2))
                     S = Act(S);
-            F.StrValue.Replace(S, "");
+            F.StrValue = F.StrValue.Replace(S, "");
+            return F;
+        }
+        public static Field operator -(Field F, Boolean B)
+        {
+            if (SetBol != null)
+                foreach (var Act in (from a in SetBol where a.Item1 == F.Id select a.Item2))
+                    B = Act(B);
+            F.BolValue = B;
+            return F;
+        }
+        public static Field operator -(Field F, Char C)
+        {
+            if (SetChr != null)
+                foreach (var Act in (from a in SetChr where a.Item1 == F.Id select a.Item2))
+                    C = Act(C);
+            F.ChrValue = C;
             return F;
         }
 

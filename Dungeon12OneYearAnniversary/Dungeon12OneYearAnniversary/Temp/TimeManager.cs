@@ -29,10 +29,11 @@ namespace Dungeon12OneYearAnniversary.Temp
                         {
                             State.Current.GameField.Map[X, Y] = Monster.GetRandom();
                             State.Current.Msg.Message(new IO.DrawerLine(State.Current.GameField.Map[X, Y].Name + " coming into the lair!", State.Current.GameField.Map[X, Y].Color));
-                            State.Current.GameField.Map[X, Y].Position = new Map.Coord() { X = X, Y = Y };
+                            State.Current.GameField.Map[X, Y].Position = new Coord() { X = X, Y = Y };
                         }
                     }
                 }
+                State.Current.Info.Draw();
             }
         }
     }
