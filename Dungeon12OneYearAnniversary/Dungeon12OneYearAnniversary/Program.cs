@@ -39,10 +39,13 @@ namespace Dungeon12OneYearAnniversary
 
             Console.Title = "Dungeon 12 One Year Anniversary";
 
+            //Console.WriteLine(Dungeon12OneYearAnniversary.Temp.State.Current.Hero.SPName.GetPtr());
+            //Console.WriteLine(Dungeon12OneYearAnniversary.Temp.State.Current.Hero.SPColor.GetPtr());
+
             Start();
 
             Console.ReadLine();
-        }
+        }        
 
         static void Start()
         {
@@ -62,4 +65,4 @@ namespace Dungeon12OneYearAnniversary
             return true;
         }
     }
-}
+};

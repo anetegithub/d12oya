@@ -15,8 +15,6 @@ namespace Dungeon12OneYearAnniversary.Items
     {
         private void Constructor()
         {
-            System.Runtime.Serialization.ObjectIDGenerator a = new System.Runtime.Serialization.ObjectIDGenerator();            
-
             Chp = 1;
             Chp.SetInt((Int32 Prev) =>
             {

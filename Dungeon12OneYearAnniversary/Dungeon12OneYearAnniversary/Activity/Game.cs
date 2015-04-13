@@ -14,6 +14,18 @@ namespace Dungeon12OneYearAnniversary.Activity
     {
         public static void Run()
         {
+            InitHero();
+
+            new Menu.Message().Run();
+            Console.Clear();
+            State.Current.Info.Run();
+            State.Current.Msg.Run();
+            State.Current.Display.Run();
+        }
+
+        private static void InitHero()
+        {
+
             State.Current.GameField.Map[35, 15] = State.Current.Hero;
             State.Current.Hero.Position = new Coord() { X = 35, Y = 15 };
             State.Current.Hero.HeroIcon = '@';
@@ -23,12 +35,6 @@ namespace Dungeon12OneYearAnniversary.Activity
             State.Current.Hero.Mhp = 100;
             State.Current.Hero.HeroColor = ConsoleColor.Red.ToString();
             State.Current.Hero.HeroBack = ConsoleColor.Black.ToString();
-
-            new Menu.Message().Run();
-            Console.Clear();
-            State.Current.Info.Run();
-            State.Current.Msg.Run();
-            State.Current.Display.Run();
         }
     }
 }
