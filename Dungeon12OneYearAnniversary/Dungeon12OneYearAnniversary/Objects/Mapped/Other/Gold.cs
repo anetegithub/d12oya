@@ -27,7 +27,7 @@ namespace Dungeon12OneYearAnniversary.Objects.Mapped
         public Boolean IsPassable
         { get { return true; } }
         public Char Icon
-        { get { return '∙'; } }
+        { get { return '∙'; } }//'▲'
         public ConsoleColor Color
         { get { return ConsoleColor.DarkYellow; } }
         public ConsoleColor Back

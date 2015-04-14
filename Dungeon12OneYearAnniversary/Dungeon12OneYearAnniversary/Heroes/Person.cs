@@ -8,7 +8,6 @@ using Dungeon12OneYearAnniversary.Objects;
 using Dungeon12OneYearAnniversary.Map;
 using Dungeon12OneYearAnniversary.Magic;
 using Dungeon12OneYearAnniversary.Temp;
-using Dungeon12OneYearAnniversary.Items.Equippable;
 
 namespace Dungeon12OneYearAnniversary.Heroes
 {
@@ -58,11 +57,14 @@ namespace Dungeon12OneYearAnniversary.Heroes
         public Field HeroColor;
         public Field HeroBack;
 
-        public List<IThing> Inventory = new List<IThing>();
-        public void Dress(IEquippable Equippable)
-        { Equippable.Equip(); }
-        public void Undress(IEquippable Equippable)
-        { Equippable.UnEquip(); }
+        private Int32 _ImpPackCurrent = 0;
+        public Int32 ImpPackCurrent
+        { get { return _ImpPackCurrent; } }
+        public void ImpPackIncrease()
+        { _ImpPackCurrent++; }
+        private Int32 _ImpPackMax = 0;
+        public Int32 ImpPackMax
+        { get { return _ImpPackMax; } }
 
         public Coord Position { get; set; }
         public IThing Bag { get; set; }

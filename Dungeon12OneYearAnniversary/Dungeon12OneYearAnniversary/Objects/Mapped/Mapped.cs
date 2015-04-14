@@ -5,7 +5,6 @@ using System.Text;
 using System.Threading.Tasks;
 
 using Dungeon12OneYearAnniversary.Temp;
-using Dungeon12OneYearAnniversary.Items.Equippable;
 
 namespace Dungeon12OneYearAnniversary.Objects.Mapped
 {
@@ -24,7 +23,7 @@ namespace Dungeon12OneYearAnniversary.Objects.Mapped
                 switch (State.Random.Next(2))
                 {
                     case 0: { return new Gold(); }
-                    case 1: { return new Helm(); }
+                    case 1: return new ArmorPile();
                     default: return new Gold();
                 }
         }
