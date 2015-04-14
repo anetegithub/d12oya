@@ -13,7 +13,7 @@ namespace Dungeon12OneYearAnniversary.Objects.Mapped
     {
         public Gold()
         {
-            _Gold = State.Random.Next(1, (Int32)(State.Current.Hero.Level.ToInt() * 1.56463));
+            _Gold = State.Random.Next(1, (Int32)(State.Current.Hero.Level.Int() * 1.56463));
             State.Current.Msg.Message(new IO.DrawerLine("Somebody dropped some coins!", ConsoleColor.Yellow));
         }
 

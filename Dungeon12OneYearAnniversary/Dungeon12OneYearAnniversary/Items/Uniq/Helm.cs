@@ -16,11 +16,11 @@ namespace Dungeon12OneYearAnniversary.Items.Uniq
             : base(
             () =>
             {
-                State.Current.Hero.Chp.SetInt(UniqHealingEffect);
+                Input.OnInput += UniqHealingEffect;
             },
             () =>
             {
-                State.Current.Hero.Chp.DelInt(UniqHealingEffect);
+                Input.OnInput -= UniqHealingEffect;
             })
         { }
 
@@ -40,10 +40,10 @@ namespace Dungeon12OneYearAnniversary.Items.Uniq
         { get { return ConsoleColor.White; } }
         public void Action()
         { Activate(); }
-
-        public static Int32 UniqHealingEffect(Int32 Prev)
+                
+        public static void UniqHealingEffect()
         {
-            if (State.Current.Hero.Chp.ToInt() < State.Current.Hero.Mhp.ToInt())
+            if (State.Current.Hero.Chp.Int() < State.Current.Hero.Mhp.Int())
             {
                 State.Current.Hero.Chp += 1;
 
@@ -57,11 +57,7 @@ namespace Dungeon12OneYearAnniversary.Items.Uniq
                 Line += DCLine.New("1", ConsoleColor.Red, ConsoleColor.White);
                 Line += " hp!";
                 State.Current.Msg.Message(Line);
-
-                State.Current.Info.Draw();
             }
-
-            return Prev;
         }
     }
 }

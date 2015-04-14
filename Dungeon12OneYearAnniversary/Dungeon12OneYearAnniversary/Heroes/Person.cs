@@ -8,6 +8,7 @@ using Dungeon12OneYearAnniversary.Objects;
 using Dungeon12OneYearAnniversary.Map;
 using Dungeon12OneYearAnniversary.Magic;
 using Dungeon12OneYearAnniversary.Temp;
+using Dungeon12OneYearAnniversary.Items.Equippable;
 
 namespace Dungeon12OneYearAnniversary.Heroes
 {
@@ -27,7 +28,7 @@ namespace Dungeon12OneYearAnniversary.Heroes
         }
 
         public Field Csp, Msp;
-        public Field SPColor = ConsoleColor.Blue.ToString(), SPName = "MP";
+        public Field SPColor = ConsoleColor.Blue, SPName = "MP";
 
         public Field Level = 0, Cexp = 0, Mexp = 100;
 
@@ -48,8 +49,7 @@ namespace Dungeon12OneYearAnniversary.Heroes
             return 0;
         }
 
-
-        public Field Barrier {get;set;}
+        public Field Barrier { get; set; }
         public Field Armor { get; set; }
 
         public Field Gold = 0;
@@ -59,6 +59,10 @@ namespace Dungeon12OneYearAnniversary.Heroes
         public Field HeroBack;
 
         public List<IThing> Inventory = new List<IThing>();
+        public void Dress(IEquippable Equippable)
+        { Equippable.Equip(); }
+        public void Undress(IEquippable Equippable)
+        { Equippable.UnEquip(); }
 
         public Coord Position { get; set; }
         public IThing Bag { get; set; }

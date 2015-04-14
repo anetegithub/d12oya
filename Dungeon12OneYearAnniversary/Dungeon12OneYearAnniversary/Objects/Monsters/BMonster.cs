@@ -28,15 +28,15 @@ namespace Dungeon12OneYearAnniversary.Objects.Monsters
         {
             Field Chp = 0;
 
-            Chp = (Int32)(State.Current.Hero.Mhp.ToInt() * HPRate);
-            Mhp = (Int32)(State.Current.Hero.Mhp.ToInt() * HPRate);
+            Chp = (Int32)(State.Current.Hero.Mhp.Int() * HPRate);
+            Mhp = (Int32)(State.Current.Hero.Mhp.Int() * HPRate);
             Ap = 1;
 
             Loot = new Objects.Mapped.Gold();
 
-            Chp.SetInt((Int32 Prev) =>
+            Chp.OnSet((Int32 Prev) =>
                 {
-                    if (this.Chp.ToInt() - Prev <= 0)
+                    if (this.Chp.Int() - Prev <= 0)
                     {
                         this.WhenDies();
                         return 0;
@@ -46,11 +46,11 @@ namespace Dungeon12OneYearAnniversary.Objects.Monsters
                 });
             this.Chp = Chp; ;
 
-            Armor = (Int32)(State.Current.Hero.Level.ToInt() * ArmorRate);
-            Barrier = (Int32)(State.Current.Hero.Level.ToInt() * BarrierRate);
+            Armor = (Int32)(State.Current.Hero.Level.Int() * ArmorRate);
+            Barrier = (Int32)(State.Current.Hero.Level.Int() * BarrierRate);
 
-            MinDmg = (Int32)(State.Current.Hero.Level.ToInt() * MinDmgRate);
-            MaxDmg = (Int32)((MinDmg.ToInt() * MaxDmgRate) + MinDmg.ToInt());
+            MinDmg = (Int32)(State.Current.Hero.Level.Int() * MinDmgRate);
+            MaxDmg = (Int32)((MinDmg.Int() * MaxDmgRate) + MinDmg.Int());
 
             this.Exp = Exp;
         }
@@ -101,7 +101,7 @@ namespace Dungeon12OneYearAnniversary.Objects.Monsters
 
         public Int32 Cast(Int32 Barrier)
         {
-            Int32 Dmg = MDmg.ToInt() * Ap.ToInt();
+            Int32 Dmg = MDmg.Int() * Ap.Int();
             Dmg -= (Int32)(Barrier * 0.2);
             return Dmg < 0 ? 0 : Dmg;
         }
@@ -179,7 +179,7 @@ namespace Dungeon12OneYearAnniversary.Objects.Monsters
         {
             if (State.Random.Next(2) == 0)
                 Attacking();
-            else if (MDmg.ToInt() != 0)
+            else if (MDmg.Int() != 0)
                 Casting();
             else
                 Attacking();

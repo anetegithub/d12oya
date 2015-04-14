@@ -24,13 +24,13 @@ namespace Dungeon12OneYearAnniversary.Activity
             Hero.Level = 1;
 
             StatDisplay(Hero);
-
+            Console.ReadKey(true);
             Game.Run();
         }
 
         private static void NewGameMenu()
         {
-            Input i = new Input();
+            Control i = new Control();
             i.Title = new Option() { Text = "Hero name:", Back = ConsoleColor.Black, Color = ConsoleColor.Magenta };
             i.ForegroundColor = ConsoleColor.Magenta;
             i.BackgroundColor = ConsoleColor.Black;
@@ -58,7 +58,7 @@ namespace Dungeon12OneYearAnniversary.Activity
                     CloseAfterClick = true,
                     Click = () =>
                     {
-                        State.Current.Hero.Race = Value.ToString();
+                        State.Current.Hero.Race = Value;
                     }
                 });
             }
@@ -79,7 +79,7 @@ namespace Dungeon12OneYearAnniversary.Activity
                     CloseAfterClick = true,
                     Click = () =>
                     {
-                        State.Current.Hero.Class = Value.ToString();
+                        State.Current.Hero.Class = Value;
                     }
                 });
             }
@@ -101,7 +101,7 @@ namespace Dungeon12OneYearAnniversary.Activity
 
         private static void LoadMenu()
         {
-            Input i = new Input();
+            Control i = new Control();
             i.Title = new Option() { Text = "Пропишите путь к *.d12oya файлу!", Back = ConsoleColor.Black, Color = ConsoleColor.Magenta };
             i.ForegroundColor = ConsoleColor.Magenta;
             i.BackgroundColor = ConsoleColor.Black;
@@ -117,10 +117,10 @@ namespace Dungeon12OneYearAnniversary.Activity
             Console.Clear();
 
             DrawerContent con = new DrawerContent();
-            con.AppendLine(new DrawerLine("Hero: " + Hero.HeroName.ToStr()));
-            con.AppendLine(new DrawerLine("Race: " + Hero.Race.ToStr()));
-            con.AppendLine(new DrawerLine("Class: " + Hero.Class.ToStr()));
-            con.AppendLine(new DrawerLine("Level: " + Hero.Level.ToInt().ToString()));
+            con.AppendLine(new DrawerLine("Hero: " + Hero.HeroName.String()));
+            con.AppendLine(new DrawerLine("Race: " + Hero.Race.Enum()));
+            con.AppendLine(new DrawerLine("Class: " + Hero.Class.Enum()));
+            con.AppendLine(new DrawerLine("Level: " + Hero.Level.Int().ToString()));
 
             DrawerOptions opt = new DrawerOptions();
             Int32 x = 0;

@@ -16,7 +16,7 @@ namespace Dungeon12OneYearAnniversary.Temp
         {
             var HeroPos = State.Current.Hero.Position;
             var NearFields = (from a in State.Current.GameField.Map.Cast<IThing>()
-                              where (Math.Abs(a.Position.X - HeroPos.X) <= 1) && (Math.Abs(a.Position.Y - HeroPos.Y) <= 1) && GetInterface(a, typeof(IAttackable))
+                              where (Math.Abs(a.Position.X - HeroPos.X) <= 1) && (Math.Abs(a.Position.Y - HeroPos.Y) <= 1) && Extensions.GetInterface(a, typeof(IAttackable))
                               select a).ToList();
             NearFields.Remove(State.Current.Hero);
             if (NearFields.Count == 1)
@@ -50,22 +50,12 @@ namespace Dungeon12OneYearAnniversary.Temp
             }
         }
 
-        private static Boolean GetInterface(IThing Object, Type Interface)
-        {
-            try
-            {
-                Object.GetType().GetInterfaceMap(Interface);
-                return true;
-            }
-            catch (ArgumentException) { return false; }
-        }
-
         private static void DealDamage(IThing Target)
         {
             Int32 Armor = 0;
 
-            if (GetInterface(Target, typeof(IDefender)))
-                Armor = (Target as IDefender).Armor.ToInt();
+            if (Extensions.GetInterface(Target, typeof(IDefender)))
+                Armor = (Target as IDefender).Armor.Int();
             else
                 Armor = 0;
 

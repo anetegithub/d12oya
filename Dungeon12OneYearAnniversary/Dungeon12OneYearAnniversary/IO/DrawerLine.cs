@@ -23,22 +23,25 @@ namespace Dungeon12OneYearAnniversary.IO
         }
 
         private List<DrawerChar> _Chars = new List<DrawerChar>();
-
         public List<DrawerChar> Chars
         {
             get { return _Chars; }
             protected set { _Chars = value; }
         }
+        
+        public void Clear()
+        {
+            this._Chars.Clear();
+        }
+
+        public ConsoleColor DefaultForegroundColor = ConsoleColor.Gray;
+        public ConsoleColor DefaultBackgroundColor = ConsoleColor.Black;
 
         public static DrawerLine operator +(DrawerLine Line, DrawerChar Char)
         {
             Line._Chars.Add(Char);
             return Line;
         }
-
-        public ConsoleColor DefaultForegroundColor = ConsoleColor.Gray;
-        public ConsoleColor DefaultBackgroundColor = ConsoleColor.Black;
-
         public static DrawerLine operator +(DrawerLine Line, String String)
         {
             foreach (var Char in String)
@@ -47,7 +50,6 @@ namespace Dungeon12OneYearAnniversary.IO
             }
             return Line;
         }
-
         public static DrawerLine operator +(DrawerLine Line, DCLine DCLine)
         {
             foreach (var Char in DCLine.Text)
@@ -64,7 +66,6 @@ namespace Dungeon12OneYearAnniversary.IO
                 _Chars.Add(new DrawerChar() { Icon = Char, Color = DefaultForegroundColor, Back = DefaultBackgroundColor });
             }
         }
-
         public void Add(DCLine DCLine)
         {
             foreach (var Char in DCLine.Text)
@@ -72,7 +73,6 @@ namespace Dungeon12OneYearAnniversary.IO
                 _Chars.Add(new DrawerChar() { Icon = Char, Color = DCLine.Foreground, Back = DCLine.Background });
             }
         }
-
         public void Add(DrawerChar Char)
         {
             _Chars.Add(Char);

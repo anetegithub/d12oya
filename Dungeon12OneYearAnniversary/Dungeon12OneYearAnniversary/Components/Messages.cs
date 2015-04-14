@@ -94,6 +94,12 @@ namespace Dungeon12OneYearAnniversary.Components
 
         public void Message(DrawerLine Msg)
         {
+            if (Msg.Chars.Count >= "Have you seen where be near the seller? You broke the item...".Length)
+                Msg.Chars.RemoveRange(Msg.Chars.Count - 5, 5);
+
+            Msg.Chars.InsertRange(0, new DrawerLine(DateTime.Now.ToShortTimeString() + "> ", ConsoleColor.DarkGreen).Chars);
+            Msg.Chars.AddRange(new DrawerLine(" {" + TimeManager.Steps + "}", ConsoleColor.DarkGreen).Chars);
+
             Logger.Add(Msg);
 
             for (int i = Msg.Chars.Count; i < 68; i++)

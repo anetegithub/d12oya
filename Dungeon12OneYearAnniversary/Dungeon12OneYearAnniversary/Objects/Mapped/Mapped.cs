@@ -13,20 +13,20 @@ namespace Dungeon12OneYearAnniversary.Objects.Mapped
     {
         public static IThing GetRandom()
         {
-            if (State.Random.Next(8) == 0)
+            if (State.Random.Next(2) == 0)
                 switch (State.Random.Next(2))
                 {
                     case 0: { return new Rock(); }
-                    case 1: { return new Helm(); }
+                    case 1: { return new Hole(); }
                     default: return new Rock();
                 }
             else
-                return new Items.Uniq.Helm();
-                //switch (State.Random.Next(2))
-                //{
-                //    case 0: { return new Gold(); }
-                //    default: return new Gold();
-                //}
+                switch (State.Random.Next(2))
+                {
+                    case 0: { return new Gold(); }
+                    case 1: { return new Helm(); }
+                    default: return new Gold();
+                }
         }
     }
 }

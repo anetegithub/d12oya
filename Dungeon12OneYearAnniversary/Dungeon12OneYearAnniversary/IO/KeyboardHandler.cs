@@ -33,13 +33,15 @@ namespace Dungeon12OneYearAnniversary.IO
                     State.Current.Msg.MessageMin(new DrawerLine("Steps left : " + TimeManager.Steps.ToString(), ConsoleColor.DarkYellow));
                     State.Current.Hero.Position = State.Current.GameField.Move(State.Current.Hero.Position, KeyInfo.Key);
                     State.Current.GameField.Activate(State.Current.Hero.Position);
-                    if (State.Random.Next(30) == 0) { State.Current.GameField.DropItem(); }
+                    if (State.Random.Next(50) == 0) { State.Current.GameField.DropItem(); }
                     break;
                 case ConsoleKey.A:
                     AttackManager.Attack();
                     break;
                 default: break;
             }
+            State.Current.Info.Draw();
+            Input.Invoke();
             Handle();
         }
     }

@@ -10,6 +10,8 @@ using Dungeon12OneYearAnniversary.Menu;
 
 using Dungeon12OneYearAnniversary.IO;
 
+using Dungeon12OneYearAnniversary.Objects;
+
 namespace Dungeon12OneYearAnniversary
 {
     class Program
@@ -63,6 +65,16 @@ namespace Dungeon12OneYearAnniversary
                 || c == '=' || c == '{' || c == '}' || c == '[' || c == ']' || c == '\\' || c == '/' || c == '|' || c == '\'' || c == '<' || c == '>')
                 return false;
             return true;
+        }
+
+        internal static Boolean GetInterface(IThing Object, Type Interface)
+        {
+            try
+            {
+                Object.GetType().GetInterfaceMap(Interface);
+                return true;
+            }
+            catch (ArgumentException) { return false; }
         }
     }
 };

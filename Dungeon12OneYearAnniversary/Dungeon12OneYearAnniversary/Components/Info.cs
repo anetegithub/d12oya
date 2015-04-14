@@ -34,48 +34,48 @@ namespace Dungeon12OneYearAnniversary.Components
 
             DrawerContent Content = new DrawerContent();
 
-            Content.AppendLine(Drawer.Spaces((13) - (State.Current.Hero.HeroName.ToStr().Length / 2)) + State.Current.Hero.HeroName.ToStr(), ConsoleColor.Magenta);
+            Content.AppendLine(Drawer.Spaces((13) - (State.Current.Hero.HeroName.String().Length / 2)) + State.Current.Hero.HeroName.String(), ConsoleColor.Magenta);
 
             Content.AppendLine();
 
-            String S = "Race : " + State.Current.Hero.Race.ToStr();
+            String S = "Race : " + State.Current.Hero.Race.Enum();
             Content.AppendLine(Drawer.Spaces((13) - (S.Length / 2)) + S, ConsoleColor.DarkCyan);
-            S = "Class : " + State.Current.Hero.Class.ToStr();
+            S = "Class : " + State.Current.Hero.Class.Enum();
             Content.AppendLine(Drawer.Spaces((13) - (S.Length / 2)) + S, ConsoleColor.DarkCyan);
 
             Content.AppendLine();
 
-            S = "Level : " + State.Current.Hero.Level.ToInt().ToString();
+            S = "Level : " + State.Current.Hero.Level.Int().ToString();
             Content.AppendLine(Drawer.Spaces((13) - (S.Length / 2)) + S, ConsoleColor.DarkGray);
-            S = "EXP : " + State.Current.Hero.Cexp.ToInt().ToString() + "/" + State.Current.Hero.Mexp.ToInt().ToString();
+            S = "EXP : " + State.Current.Hero.Cexp.Int().ToString() + "/" + State.Current.Hero.Mexp.Int().ToString();
             Content.AppendLine(Drawer.Spaces((13) - (S.Length / 2)) + S, ConsoleColor.DarkGray);
 
             Content.AppendLine();
 
-            S = "HP : " + State.Current.Hero.Chp.ToInt().ToString() + "/" + State.Current.Hero.Mhp.ToInt().ToString();
+            S = "HP : " + State.Current.Hero.Chp.Int().ToString() + "/" + State.Current.Hero.Mhp.Int().ToString();
             Content.AppendLine(Drawer.Spaces((13) - (S.Length / 2)) + S, ConsoleColor.Red);
-            S = State.Current.Hero.SPName.ToStr() + " : " + State.Current.Hero.Csp.ToInt().ToString() + "/" + State.Current.Hero.Msp.ToInt().ToString();
-            Content.AppendLine(Drawer.Spaces((13) - (S.Length / 2)) + S, (ConsoleColor)Enum.Parse(typeof(ConsoleColor), State.Current.Hero.SPColor.ToStr()));
+            S = State.Current.Hero.SPName.String() + " : " + State.Current.Hero.Csp.Int().ToString() + "/" + State.Current.Hero.Msp.Int().ToString();
+            Content.AppendLine(Drawer.Spaces((13) - (S.Length / 2)) + S, (ConsoleColor)State.Current.Hero.SPColor.Enum());
 
             Content.AppendLine();
 
             S = "Damage";
             Content.AppendLine(Drawer.Spaces((13) - (S.Length / 2)) + S, ConsoleColor.DarkRed);
-            S = State.Current.Hero.MinDmg.ToInt().ToString() + "-" + State.Current.Hero.MaxDmg.ToInt().ToString();
+            S = State.Current.Hero.MinDmg.Int().ToString() + "-" + State.Current.Hero.MaxDmg.Int().ToString();
             Content.AppendLine(Drawer.Spaces((13) - (S.Length / 2)) + S, ConsoleColor.DarkRed);
 
             Content.AppendLine();
 
-            S = "Attack : " + State.Current.Hero.Ad.ToInt().ToString();
+            S = "Attack : " + State.Current.Hero.Ad.Int().ToString();
             Content.AppendLine(Drawer.Spaces((13) - (S.Length / 2)) + S, ConsoleColor.Cyan);
-            S = "Magic : " + State.Current.Hero.Ap.ToInt().ToString();
+            S = "Magic : " + State.Current.Hero.Ap.Int().ToString();
             Content.AppendLine(Drawer.Spaces((13) - (S.Length / 2)) + S, ConsoleColor.Magenta);
 
             Content.AppendLine();
 
-            S = "Armor : " + State.Current.Hero.Armor.ToInt().ToString();
+            S = "Armor : " + State.Current.Hero.Armor.Int().ToString();
             Content.AppendLine(Drawer.Spaces((13) - (S.Length / 2)) + S, ConsoleColor.DarkCyan);
-            S = "Barier : " + State.Current.Hero.Barrier.ToInt().ToString();
+            S = "Barier : " + State.Current.Hero.Barrier.Int().ToString();
             Content.AppendLine(Drawer.Spaces((13) - (S.Length / 2)) + S, ConsoleColor.DarkMagenta);
 
             Content.AppendLine();
@@ -99,7 +99,7 @@ namespace Dungeon12OneYearAnniversary.Components
             Content.AppendLine();
 
 
-            S = "Gold : " + State.Current.Hero.Gold.ToInt().ToString();
+            S = "Gold : " + State.Current.Hero.Gold.Int().ToString();
             Content.AppendLine(Drawer.Spaces((13) - (S.Length / 2)) + S, ConsoleColor.Yellow);
 
             Drawer.Draw(Content, new DrawerOptions() { Left = 73, Top = 1 });

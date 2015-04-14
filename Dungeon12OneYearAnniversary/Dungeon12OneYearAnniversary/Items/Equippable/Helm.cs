@@ -11,7 +11,7 @@ namespace Dungeon12OneYearAnniversary.Items.Equippable
     internal sealed class Helm : BItem, IThing
     {
         public Helm()
-            : base()
+            : base(0, 0, 0, 0, 0, 0, 1, 0)
         { }
 
         public Coord Position { get; set; }
@@ -19,7 +19,7 @@ namespace Dungeon12OneYearAnniversary.Items.Equippable
         public String Name
         { get { return "Helm"; } }
         public String Info
-        { get { return "Easy metall heml."; } }
+        { get { return "Easy metall helm."; } }
         public Boolean IsPassable
         { get { return false; } }
         public Char Icon

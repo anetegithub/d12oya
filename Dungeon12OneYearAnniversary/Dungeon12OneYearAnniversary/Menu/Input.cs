@@ -9,7 +9,7 @@ using Dungeon12OneYearAnniversary.IO;
 
 namespace Dungeon12OneYearAnniversary.Menu
 {
-    internal sealed class Input : BControl
+    internal sealed class Control : BControl
     {
         public Action<String> OnEnter;
 

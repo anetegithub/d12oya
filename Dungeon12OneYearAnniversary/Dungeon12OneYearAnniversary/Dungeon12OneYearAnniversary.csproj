@@ -76,9 +76,11 @@
     <Compile Include="Components\Display.cs" />
     <Compile Include="Controls\IControl.cs" />
     <Compile Include="Components\Info.cs" />
+    <Compile Include="IO\Input.cs" />
     <Compile Include="IO\KeyboardHandler.cs" />
     <Compile Include="Items\Equippable\Helm.cs" />
     <Compile Include="Items\BItem.cs" />
+    <Compile Include="Items\Equippable\IEquippable.cs" />
     <Compile Include="Items\Uniq\Helm.cs" />
     <Compile Include="Magic\ICastable.cs" />
     <Compile Include="Magic\ISpell.cs" />
@@ -97,6 +99,8 @@
     <Compile Include="Objects\Mapped\EThing.cs" />
     <Compile Include="Objects\Mapped\Other\Gold.cs" />
     <Compile Include="Objects\Mapped\Mapped.cs" />
+    <Compile Include="Objects\Mapped\Other\IMerch.cs" />
+    <Compile Include="Objects\Mapped\Permanent\Hole.cs" />
     <Compile Include="Objects\Mapped\Permanent\Rock.cs" />
     <Compile Include="Objects\Monsters\BMonster.cs" />
     <Compile Include="Objects\Monsters\Exemples\Rat.cs" />
