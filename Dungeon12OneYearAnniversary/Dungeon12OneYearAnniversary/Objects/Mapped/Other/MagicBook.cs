@@ -10,41 +10,41 @@ using Dungeon12OneYearAnniversary.IO;
 
 namespace Dungeon12OneYearAnniversary.Objects.Mapped
 {
-    internal sealed class BarrierVase : IThing
+    internal sealed class MagicBook : IThing
     {
-        public BarrierVase()
+        public MagicBook()
         {
             try
             {
                 _Value = State.Random.Next((Int32)(State.Current.Hero.Chp.Int() * 0.018));
             }
             catch { }
-            State.Current.Chat.Message(new IO.DrawerLine(IO.DCLine.New("From the air drops bowl with chopsticks?", ConsoleColor.Magenta, ConsoleColor.DarkRed)));
+            State.Current.Chat.Message(new IO.DrawerLine(IO.DCLine.New("Magic brings a whirlwind book!", ConsoleColor.Magenta, ConsoleColor.DarkMagenta)));
         }
 
         private Int32 _Value;
         public Coord Position { get; set; }
         public IThing Bag { get; set; }
         public String Name
-        { get { return "Vase wands"; } }
+        { get { return "Magic book"; } }
         public String Info
-        { get { return "Vase with colorful magic wands. Smells good."; } }
+        { get { return "It seems that in this book there are spells."; } }
         public Boolean IsPassable
         { get { return true; } }
         public Char Icon
-        { get { return '‼'; } }
+        { get { return '≡'; } }
         public ConsoleColor Color
         { get { return ConsoleColor.Magenta; } }
         public ConsoleColor Back
-        { get { return ConsoleColor.DarkRed; } }
+        { get { return ConsoleColor.DarkMagenta; } }
         public void Action()
         {
             Loudmouth.Yell(
-                DCLine.New("barrier", ConsoleColor.DarkMagenta, ConsoleColor.Black),
+                DCLine.New("ability power", ConsoleColor.Magenta, ConsoleColor.DarkMagenta),
                 _Value,
                 Position,
                 () => { State.Current.Hero.Barrier += _Value; },
-                new DrawerLine("Мase exploded. Again.", ConsoleColor.Magenta));
+                new DrawerLine("The book was burned in the magical flames.", ConsoleColor.Magenta));
         }
     }
 }

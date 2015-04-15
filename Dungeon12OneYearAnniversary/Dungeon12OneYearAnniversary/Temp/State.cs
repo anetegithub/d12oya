@@ -38,7 +38,7 @@ namespace Dungeon12OneYearAnniversary.Temp
             set { _Hero = value; }
         }
 
-        public Messages Msg = new Messages();
+        public Messages Chat = new Messages();
         public Info Info = new Info();
         public Display Display = new Display();
         public GameField GameField = GameField.New;

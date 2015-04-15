@@ -22,7 +22,7 @@ namespace Dungeon12OneYearAnniversary.IO
                     Console.Clear();
                     State.Current.Info.Draw();
                     State.Current.Display.Draw();
-                    State.Current.Msg.DrawTitleCustom();
+                    State.Current.Chat.DrawTitleCustom();
                     break;
                 case ConsoleKey.UpArrow:
                 case ConsoleKey.DownArrow:
@@ -30,7 +30,7 @@ namespace Dungeon12OneYearAnniversary.IO
                 case ConsoleKey.RightArrow:
                     TimeManager.Steps--;
                     State.Current.GameField.MoveObjects();
-                    State.Current.Msg.MessageMin(new DrawerLine("Steps left : " + TimeManager.Steps.ToString(), ConsoleColor.DarkYellow));
+                    State.Current.Chat.MessageMin(new DrawerLine("Steps left : " + TimeManager.Steps.ToString(), ConsoleColor.DarkYellow));
                     State.Current.Hero.Position = State.Current.GameField.Move(State.Current.Hero.Position, KeyInfo.Key);
                     State.Current.GameField.Activate(State.Current.Hero.Position);
                     if (State.Random.Next(50) == 0) { State.Current.GameField.DropItem(); }

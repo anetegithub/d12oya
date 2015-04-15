@@ -8,12 +8,12 @@ using Dungeon12OneYearAnniversary.Map;
 using Dungeon12OneYearAnniversary.Temp;
 using Dungeon12OneYearAnniversary.Objects.Mapped;
 using Dungeon12OneYearAnniversary.IO;
-using Dungeon12OneYearAnniversary.Magic;
+using Dungeon12OneYearAnniversary.Skills;
 
 
 namespace Dungeon12OneYearAnniversary.Objects.Monsters
 {
-    internal class BMonster : ICastable, IFighter, IMagican, IMonster
+    internal class BMonster : ITargetable, IFighter, IMagican, IMonster
     {
         /// <summary>
         /// Do not forget = Action(){ this.Activate; }
@@ -96,7 +96,7 @@ namespace Dungeon12OneYearAnniversary.Objects.Monsters
             Line += DCLine.New(Dmg.ToString(), ConsoleColor.White, ConsoleColor.Red);
             Line += " damage!";
 
-            State.Current.Msg.Message(Line);
+            State.Current.Chat.Message(Line);
         }
 
         public Int32 Cast(Int32 Barrier)
@@ -124,15 +124,15 @@ namespace Dungeon12OneYearAnniversary.Objects.Monsters
             Line += DCLine.New(" magic", ConsoleColor.Magenta, ConsoleColor.White);
             Line += " damage!";
 
-            State.Current.Msg.Message(Line);
+            State.Current.Chat.Message(Line);
         }
-        private List<ISpell> Spells = new List<ISpell>();
+        private List<ISkill> Spells = new List<ISkill>();
         private void Casting()
         {
             if (Spells.Count == 0)
                 MagicAttacking();
             else
-                Spells[State.Random.Next(Spells.Count)].Cast(State.Current.Hero);
+                Spells[State.Random.Next(Spells.Count)].Use(State.Current.Hero);
         }
 
         public void WhenDies()
@@ -146,7 +146,7 @@ namespace Dungeon12OneYearAnniversary.Objects.Monsters
                 Line += " get a ";
                 Line += DCLine.New(Loot.Name, Loot.Color, Loot.Back);
                 Line += " !";
-                State.Current.Msg.Message(Line);
+                State.Current.Chat.Message(Line);
                 Loot.Action();
             }
 
@@ -163,10 +163,10 @@ namespace Dungeon12OneYearAnniversary.Objects.Monsters
                 Line += " get ";
                 Line += DCLine.New(Exp.ToString(), ConsoleColor.Blue, ConsoleColor.White);
                 Line += " exp!";
-                State.Current.Msg.Message(Line);
+                State.Current.Chat.Message(Line);
             }
             else
-                State.Current.Msg.Message(new DrawerLine("Monster died! You get " + Exp.ToString() + " exp!", ConsoleColor.Magenta));
+                State.Current.Chat.Message(new DrawerLine("Monster died! You get " + Exp.ToString() + " exp!", ConsoleColor.Magenta));
 
             if (this.GetType().GetInterface("IThing") != null)
                 State.Current.GameField.Map[(this as IThing).Position.X, (this as IThing).Position.Y] = new Mapped.EThing();
@@ -189,9 +189,9 @@ namespace Dungeon12OneYearAnniversary.Objects.Monsters
         ~BMonster()
         {
             if (this.GetType().GetInterface("IThing") != null)
-                State.Current.Msg.Message(new IO.DrawerLine((this as IThing).Name + " corpse disappeared", ConsoleColor.DarkGreen));
+                State.Current.Chat.Message(new IO.DrawerLine((this as IThing).Name + " corpse disappeared", ConsoleColor.DarkGreen));
             else
-                State.Current.Msg.Message(new IO.DrawerLine("Some corpse disappeared", ConsoleColor.DarkGreen));
+                State.Current.Chat.Message(new IO.DrawerLine("Some corpse disappeared", ConsoleColor.DarkGreen));
         }
     }
 }

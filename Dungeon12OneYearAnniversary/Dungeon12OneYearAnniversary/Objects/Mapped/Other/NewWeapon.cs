@@ -10,41 +10,41 @@ using Dungeon12OneYearAnniversary.IO;
 
 namespace Dungeon12OneYearAnniversary.Objects.Mapped
 {
-    internal sealed class BarrierVase : IThing
+    internal sealed class NewWeapon : IThing
     {
-        public BarrierVase()
+        public NewWeapon()
         {
             try
             {
                 _Value = State.Random.Next((Int32)(State.Current.Hero.Chp.Int() * 0.018));
             }
             catch { }
-            State.Current.Chat.Message(new IO.DrawerLine(IO.DCLine.New("From the air drops bowl with chopsticks?", ConsoleColor.Magenta, ConsoleColor.DarkRed)));
+            State.Current.Chat.Message(new IO.DrawerLine(IO.DCLine.New("Look there! This is a new weapon!", ConsoleColor.Cyan, ConsoleColor.Red)));
         }
 
         private Int32 _Value;
         public Coord Position { get; set; }
         public IThing Bag { get; set; }
         public String Name
-        { get { return "Vase wands"; } }
+        { get { return "New weapon?"; } }
         public String Info
-        { get { return "Vase with colorful magic wands. Smells good."; } }
+        { get { return "Nuff said"; } }
         public Boolean IsPassable
         { get { return true; } }
         public Char Icon
-        { get { return '‼'; } }
+        { get { return '↑'; } }
         public ConsoleColor Color
-        { get { return ConsoleColor.Magenta; } }
+        { get { return ConsoleColor.Cyan; } }
         public ConsoleColor Back
-        { get { return ConsoleColor.DarkRed; } }
+        { get { return ConsoleColor.Red; } }
         public void Action()
         {
             Loudmouth.Yell(
-                DCLine.New("barrier", ConsoleColor.DarkMagenta, ConsoleColor.Black),
+                DCLine.New("attack power", ConsoleColor.Cyan, ConsoleColor.DarkMagenta),
                 _Value,
                 Position,
                 () => { State.Current.Hero.Barrier += _Value; },
-                new DrawerLine("Мase exploded. Again.", ConsoleColor.Magenta));
+                new DrawerLine("The new weapon was old.", ConsoleColor.Cyan));
         }
     }
 }

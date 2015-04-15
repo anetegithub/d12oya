@@ -15,7 +15,7 @@ namespace Dungeon12OneYearAnniversary.Objects.Mapped
         public ArmorPile()
         {
             _Value = State.Random.Next((Int32)(State.Current.Hero.Chp.Int() * 0.018));
-            State.Current.Msg.Message(new IO.DrawerLine(IO.DCLine.New("From under a pile of mud peeps metal!!", ConsoleColor.Gray, ConsoleColor.DarkGray)));
+            State.Current.Chat.Message(new IO.DrawerLine(IO.DCLine.New("From under a pile of mud peeps metal!!", ConsoleColor.Gray, ConsoleColor.DarkGray)));
         }
 
         private Int32 _Value;

@@ -59,7 +59,7 @@ namespace Dungeon12OneYearAnniversary.Objects
         public void Action()
         {
             if (InnerAction == null)
-                State.Current.Msg.Message(new DrawerLine("This thing do nothing when action!", ConsoleColor.DarkGray));
+                State.Current.Chat.Message(new DrawerLine("This thing do nothing when action!", ConsoleColor.DarkGray));
             else
                 InnerAction();
         }

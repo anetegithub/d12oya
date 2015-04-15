@@ -14,7 +14,7 @@ namespace Dungeon12OneYearAnniversary.Objects.Mapped
         public Hole()
             : base()
         {
-            State.Current.Msg.Message(new IO.DrawerLine("Somewhere hit the floor...", ConsoleColor.DarkBlue));
+            State.Current.Chat.Message(new IO.DrawerLine("Somewhere hit the floor...", ConsoleColor.DarkBlue));
         }
 
         public Coord Position { get; set; }
@@ -33,7 +33,7 @@ namespace Dungeon12OneYearAnniversary.Objects.Mapped
         { get { return ConsoleColor.Black; } }
         public void Action()
         {
-            State.Current.Msg.Message(new IO.DrawerLine("Be care!!!", ConsoleColor.DarkBlue));
+            State.Current.Chat.Message(new IO.DrawerLine("Be care!!!", ConsoleColor.DarkBlue));
         }
     }
 }

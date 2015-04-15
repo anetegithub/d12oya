@@ -29,7 +29,7 @@ namespace Dungeon12OneYearAnniversary.Temp
                 var Enemy = new List<IThing>();
                 while (Pos == HeroPos)
                 {
-                    State.Current.Msg.Message(new IO.DrawerLine(IO.DCLine.New("Choose attack direction by numpad numbers (5 - you)", ConsoleColor.White, ConsoleColor.Red)));
+                    State.Current.Chat.Message(new IO.DrawerLine(IO.DCLine.New("Choose attack direction by numpad numbers (5 - you)", ConsoleColor.White, ConsoleColor.Red)));
                     switch (Console.ReadKey(true).Key)
                     {
                         case ConsoleKey.NumPad7: { Pos.X -= 1; Pos.Y -= 1; break; }
@@ -71,7 +71,7 @@ namespace Dungeon12OneYearAnniversary.Temp
             Line += IO.DCLine.New(Dmg.ToString(), ConsoleColor.White, ConsoleColor.Black);
             Line += " damage!";
 
-            State.Current.Msg.Message(Line);
+            State.Current.Chat.Message(Line);
             State.Current.GameField.Activate(State.Current.Hero.Position);
         }
     }

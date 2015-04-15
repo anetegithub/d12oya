@@ -20,10 +20,15 @@ namespace Dungeon12OneYearAnniversary.Objects.Mapped
                     default: return new Rock();
                 }
             else
-                switch (State.Random.Next(2))
+                switch (State.Random.Next(7))
                 {
                     case 0: { return new Gold(); }
                     case 1: return new ArmorPile();
+                    case 2: return new BarrierVase();
+                    case 3: return new MagicBook();
+                    case 4: return new HealRune();
+                    case 5: return new ResourceRune();
+                    case 6: return new NewWeapon();
                     default: return new Gold();
                 }
         }

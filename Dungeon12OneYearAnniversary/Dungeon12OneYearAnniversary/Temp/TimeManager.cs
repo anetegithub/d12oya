@@ -21,26 +21,25 @@ namespace Dungeon12OneYearAnniversary.Temp
                 if (Steps == 0)
                 {
                     _Steps = 50 - State.Current.Hero.Level.Int();
-                    if (_Steps == 0)
-                        Console.WriteLine("Last boss");
-                    else
+                    Int32 X = State.Random.Next(68), Y = State.Random.Next(29);
+                    if (State.Current.GameField.Map[X, Y].Name == "Nothing")
                     {
-                        Int32 X = State.Random.Next(68), Y = State.Random.Next(29);
-                        if (State.Current.GameField.Map[X, Y].Name == "Nothing")
-                        {
-                            DrawerLine Line = new DrawerLine();
-                            Line.DefaultBackgroundColor = ConsoleColor.Gray;
-                            Line.DefaultForegroundColor = ConsoleColor.Black;
+                        DrawerLine Line = new DrawerLine();
+                        Line.DefaultBackgroundColor = ConsoleColor.Gray;
+                        Line.DefaultForegroundColor = ConsoleColor.Black;
 
+                        if (_Steps == 0)
+                            State.Current.GameField.Map[X, Y] = new Objects.Monsters.Exemples.BBos();
+                        else
                             State.Current.GameField.Map[X, Y] = Monster.GetRandom();
-                            Line += DCLine.New(State.Current.GameField.Map[X, Y].Name, State.Current.GameField.Map[X, Y].Color, State.Current.GameField.Map[X, Y].Back);
-                            Line += " coming into the lair!";
-                            State.Current.Msg.Message(Line);
-                            State.Current.GameField.Map[X, Y].Position = new Coord() { X = X, Y = Y };
-                        }
+                        Line += DCLine.New(State.Current.GameField.Map[X, Y].Name, State.Current.GameField.Map[X, Y].Color, State.Current.GameField.Map[X, Y].Back);
+                        Line += " coming into the lair!";
+                        State.Current.Chat.Message(Line);
+                        State.Current.GameField.Map[X, Y].Position = new Coord() { X = X, Y = Y };
                     }
                 }
             }
         }
+        public static UInt64 Times { get { return Input.Pressed; } }
     }
 }

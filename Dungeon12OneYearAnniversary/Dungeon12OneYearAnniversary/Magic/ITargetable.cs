@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 
 using Dungeon12OneYearAnniversary.Objects;
 
-namespace Dungeon12OneYearAnniversary.Magic
+namespace Dungeon12OneYearAnniversary.Skills
 {
-    internal interface ISpell
+    internal interface ITargetable : IAttackable, IDefender
     {
-        void Cast(ICastable Target);
+
     }
 }

@@ -6,12 +6,13 @@ using System.Threading.Tasks;
 
 using Dungeon12OneYearAnniversary.Objects;
 using Dungeon12OneYearAnniversary.Map;
-using Dungeon12OneYearAnniversary.Magic;
+using Dungeon12OneYearAnniversary.Skills;
 using Dungeon12OneYearAnniversary.Temp;
+using Dungeon12OneYearAnniversary.Menu;
 
 namespace Dungeon12OneYearAnniversary.Heroes
 {
-    internal sealed class Person : IThing, ICastable, IFighter, IMagican
+    internal sealed class Person : IThing, ITargetable, IFighter, IMagican, IImprovable
     {
         public Field HeroName;
         public Field Class;
@@ -23,7 +24,20 @@ namespace Dungeon12OneYearAnniversary.Heroes
         public Int32 Exp { get; set; }
         public void WhenDies()
         {
-            Console.WriteLine("Not implemented!");
+            Select s = new Select();
+            s.Title = new Controls.Option();
+            s.Title.Color = ConsoleColor.Magenta;
+            s.Title.Back = ConsoleColor.Black;
+            s.Title.Text = "Sorry, u dead.";
+            s.Options = new List<Controls.Option>();
+            Controls.Option opt = new Controls.Option();
+            opt.Text = "No more pain!";
+            opt.Click = () =>
+            {
+                Environment.Exit(0);
+            };
+            s.Options.Add(opt);
+            s.Run();
         }
 
         public Field Csp, Msp;
@@ -57,14 +71,18 @@ namespace Dungeon12OneYearAnniversary.Heroes
         public Field HeroColor;
         public Field HeroBack;
 
+        public ISkill Q, W, E, R;
+
         private Int32 _ImpPackCurrent = 0;
         public Int32 ImpPackCurrent
         { get { return _ImpPackCurrent; } }
         public void ImpPackIncrease()
         { _ImpPackCurrent++; }
-        private Int32 _ImpPackMax = 0;
         public Int32 ImpPackMax
-        { get { return _ImpPackMax; } }
+        { get { return 51-Level.Int(); } }
+
+        public Action OnImprove { get; set; }
+        public void Improve() { OnImprove(); }
 
         public Coord Position { get; set; }
         public IThing Bag { get; set; }
@@ -78,9 +96,9 @@ namespace Dungeon12OneYearAnniversary.Heroes
         public Char Icon
         { get { return HeroIcon; } }
         public ConsoleColor Color
-        { get { return (ConsoleColor)Enum.Parse(typeof(ConsoleColor), HeroColor); } }
+        { get { return (ConsoleColor)Enum.Parse(typeof(ConsoleColor), HeroColor.Enum().ToString()); } }
         public ConsoleColor Back
-        { get { return (ConsoleColor)Enum.Parse(typeof(ConsoleColor), HeroBack); } }
+        { get { return (ConsoleColor)Enum.Parse(typeof(ConsoleColor), HeroBack.Enum().ToString()); } }
         public void Action()
         { }
     }

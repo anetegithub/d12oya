@@ -80,25 +80,16 @@ namespace Dungeon12OneYearAnniversary.Components
 
             Content.AppendLine();
 
-            S = "Fast 1";
-            Content.AppendLine(Drawer.Spaces((13) - (S.Length / 2)) + S, ConsoleColor.DarkYellow);
-            S = "Health Potion(24)";
-            Content.AppendLine(Drawer.Spaces((13) - (S.Length / 2)) + S, ConsoleColor.DarkYellow);
+            S = "Improvement pack: ";
+            Content.AppendLine(Drawer.Spaces((13) - (S.Length / 2)) + S, ConsoleColor.Cyan);
             Content.AppendLine();
+            S = "Available: " + (State.Current.Hero.ImpPackMax - State.Current.Hero.ImpPackCurrent).ToString();
+            Content.AppendLine(Drawer.Spaces((13) - (S.Length / 2)) + S, ConsoleColor.DarkCyan);
+            S = "Current: " + State.Current.Hero.ImpPackCurrent.ToString();
+            Content.AppendLine(Drawer.Spaces((13) - (S.Length / 2)) + S, ConsoleColor.DarkCyan);
 
-            S = "Fast 2";
-            Content.AppendLine(Drawer.Spaces((13) - (S.Length / 2)) + S, ConsoleColor.DarkYellow);
-            S = "Empty";
-            Content.AppendLine(Drawer.Spaces((13) - (S.Length / 2)) + S, ConsoleColor.DarkYellow);
             Content.AppendLine();
-
-            S = "Fast 3";
-            Content.AppendLine(Drawer.Spaces((13) - (S.Length / 2)) + S, ConsoleColor.DarkYellow);
-            S = "Spell of fire(1)";
-            Content.AppendLine(Drawer.Spaces((13) - (S.Length / 2)) + S, ConsoleColor.DarkYellow);
             Content.AppendLine();
-
-
             S = "Gold : " + State.Current.Hero.Gold.Int().ToString();
             Content.AppendLine(Drawer.Spaces((13) - (S.Length / 2)) + S, ConsoleColor.Yellow);
 

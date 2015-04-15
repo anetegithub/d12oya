@@ -13,10 +13,17 @@ namespace Dungeon12OneYearAnniversary.Objects.Monsters
     {
         public static IThing GetRandom()
         {
-            if (State.Random.Next(2) == 0)
-                return new Rat();
-            else
-                return new Zombie();
+            switch(State.Random.Next(7))
+            {
+                case 0: return new Rat();
+                case 1: return new Zombie();
+                case 2: return new Dragon();
+                case 3: return new EvilSinger();
+                case 4: return new Gnome();
+                case 5: return new Necromant();
+                case 6: return new Wolf();
+                default: return new Rat();
+            }
         }
     }
 }

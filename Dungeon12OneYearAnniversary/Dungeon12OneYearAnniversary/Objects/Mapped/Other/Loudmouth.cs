@@ -20,36 +20,46 @@ namespace Dungeon12OneYearAnniversary.Objects.Mapped
                 line.DefaultBackgroundColor = ConsoleColor.Red;
 
                 line += "It's improvement pack! You taked " + State.Current.Hero.ImpPackCurrent + "/" + State.Current.Hero.ImpPackMax + ", take this one? Y/N";
-                State.Current.Msg.Message(line);
+                State.Current.Chat.Message(line);
 
                 switch (Console.ReadKey(true).Key)
                 {
                     case ConsoleKey.Y:
                         {
-                            IO.DrawerLine linew = new IO.DrawerLine();
-                            linew.DefaultForegroundColor = ConsoleColor.Cyan;
-                            linew.DefaultBackgroundColor = ConsoleColor.DarkRed;
+                            
+                                IO.DrawerLine linew = new IO.DrawerLine();
+                                linew.DefaultForegroundColor = ConsoleColor.Cyan;
+                                linew.DefaultBackgroundColor = ConsoleColor.DarkRed;
 
-                            linew += DCLine.New("You", State.Current.Hero.Color, State.Current.Hero.Back);
-                            linew += "'ve found glandule that increases your ";
-                            linew += StatName;
-                            linew += " on the ";
-                            linew += DCLine.New(_Value.ToString(), ConsoleColor.Red, ConsoleColor.Cyan);
-                            linew += "!";
+                                linew += DCLine.New("You", State.Current.Hero.Color, State.Current.Hero.Back);
+                                linew += " use IPack and inc ";
+                                linew += StatName;
+                                linew += " on the ";
+                                linew += DCLine.New(_Value.ToString(), ConsoleColor.Red, ConsoleColor.Cyan);
+                                linew += "!";
 
-                            State.Current.Msg.Message(linew);
+                                State.Current.Chat.Message(linew);
 
-                            IncreaseEffect();
+                                if (State.Current.Hero.ImpPackCurrent < State.Current.Hero.ImpPackMax)
+                                {
+                                    State.Current.Hero.ImpPackIncrease();
+                                    IncreaseEffect();
+                                }
+                            else
+                                {
+                                    DrawerLine newline = new DrawerLine();
+                                    newline.DefaultForegroundColor = ConsoleColor.Red;
+                                    newline.DefaultBackgroundColor = ConsoleColor.White;
+                                    newline += "Oh no! You cant't take more improvements at this level!";
+                                }
 
-                            State.Current.Hero.ImpPackIncrease();
-
-                            State.Current.GameField.Map[Position.X, Position.Y] = new Objects.Mapped.EThing();
-                            State.Current.GameField.Draw();
-                            return;
+                                State.Current.GameField.Map[Position.X, Position.Y] = new Objects.Mapped.EThing();
+                                State.Current.GameField.Draw();
+                                return;
                         }
                     case ConsoleKey.N:
                         {
-                            State.Current.Msg.Message(DisposeString);
+                            State.Current.Chat.Message(DisposeString);
                             State.Current.GameField.Map[Position.X, Position.Y] = new Objects.Mapped.EThing();
                             State.Current.GameField.Draw();
                             return;
