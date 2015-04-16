@@ -58,8 +58,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Activity\Game.cs" />
+    <Compile Include="Activity\Init.cs" />
     <Compile Include="Activity\Main.cs" />
+    <Compile Include="Activity\SkillMngr.cs" />
     <Compile Include="Components\Messages.cs" />
     <Compile Include="Heroes\Class.cs" />
     <Compile Include="Heroes\Field.cs" />
@@ -79,8 +80,31 @@
     <Compile Include="Components\Info.cs" />
     <Compile Include="IO\Input.cs" />
     <Compile Include="IO\KeyboardHandler.cs" />
-    <Compile Include="Magic\ITargetable.cs" />
-    <Compile Include="Magic\ISkill.cs" />
+    <Compile Include="Objects\Mapped\Other\Trap.cs" />
+    <Compile Include="Skills\BSkill.cs" />
+    <Compile Include="Skills\ClassSkills\Alchemist\Alchemy.cs" />
+    <Compile Include="Skills\ClassSkills\Alchemist\Blessingoftheelements.cs" />
+    <Compile Include="Skills\ClassSkills\Alchemist\BottleOfElements.cs" />
+    <Compile Include="Skills\ClassSkills\Alchemist\BrewPotion.cs" />
+    <Compile Include="Skills\ClassSkills\Alchemist\RainbowSpray.cs" />
+    <Compile Include="Skills\ClassSkills\BloodMage\Ghoul.cs" />
+    <Compile Include="Skills\ClassSkills\BloodMage\BloodSpear.cs" />
+    <Compile Include="Skills\ClassSkills\BloodMage\BloodShield.cs" />
+    <Compile Include="Skills\ClassSkills\BloodMage\Vampirism.cs" />
+    <Compile Include="Skills\ClassSkills\FireMage\FireArrow.cs" />
+    <Compile Include="Skills\ClassSkills\FireMage\Explosion.cs" />
+    <Compile Include="Skills\ClassSkills\FireMage\FireNova.cs" />
+    <Compile Include="Skills\ClassSkills\FireMage\FireWeapon.cs" />
+    <Compile Include="Skills\ClassSkills\Paladin\BanishEvil.cs" />
+    <Compile Include="Skills\ClassSkills\Paladin\HolyStrike.cs" />
+    <Compile Include="Skills\ClassSkills\Paladin\HolyLight.cs" />
+    <Compile Include="Skills\ClassSkills\Paladin\PillarOfLight.cs" />
+    <Compile Include="Skills\ClassSkills\Rogue\Trap.cs" />
+    <Compile Include="Skills\ClassSkills\Rogue\WeakeningPoison.cs" />
+    <Compile Include="Skills\ClassSkills\Rogue\DeadlyPoison.cs" />
+    <Compile Include="Skills\ClassSkills\Rogue\SimplePoison.cs" />
+    <Compile Include="Skills\ITargetable.cs" />
+    <Compile Include="Skills\ISkill.cs" />
     <Compile Include="Map\GameField.cs" />
     <Compile Include="Map\Coord.cs" />
     <Compile Include="Menu\Input.cs" />
@@ -121,6 +145,7 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Temp\AttackManager.cs" />
+    <Compile Include="Temp\InfoMngr.cs" />
     <Compile Include="Temp\Logger.cs" />
     <Compile Include="Temp\State.cs" />
     <Compile Include="Temp\TimeManager.cs" />
@@ -145,6 +170,7 @@
       <Install>false</Install>
     </BootstrapperPackage>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

@@ -12,7 +12,7 @@ using Dungeon12OneYearAnniversary.Menu;
 
 namespace Dungeon12OneYearAnniversary.Activity
 {
-    internal static class Game
+    internal static class Init
     {
         public static void Run()
         {
@@ -30,9 +30,13 @@ namespace Dungeon12OneYearAnniversary.Activity
             RaceSpecials();
             Mortal();
             Educable();
+            Skillable();
             State.Current.GameField.Map[35, 15] = State.Current.Hero;
             State.Current.Hero.Position = new Coord() { X = 35, Y = 15 };          
         }
+
+        private static void Skillable()
+        { SkillMngr.SetSkills(); }
 
         private static void Mortal()
         {
@@ -73,8 +77,8 @@ namespace Dungeon12OneYearAnniversary.Activity
 
         private static void StartStats(Int32 hp, Int32 mindmg, Int32 maxdmg)
         {
-            State.Current.Hero.MinDmg = mindmg;
-            State.Current.Hero.MaxDmg = maxdmg;
+            State.Current.Hero.MinDmg = mindmg*2;
+            State.Current.Hero.MaxDmg = maxdmg*4;
             State.Current.Hero.Chp = hp;
             State.Current.Hero.Mhp = hp;
         }
@@ -107,20 +111,75 @@ namespace Dungeon12OneYearAnniversary.Activity
         {
             switch ((Class)State.Current.Hero.Class.Enum())
             {
-                case Class.Alchemist: StartVision('@', ConsoleColor.Magenta, ConsoleColor.Yellow); LevelUpRates(PlusHp, 1, MinDmg, MaxDmg); break;
-                case Class.Bard: StartVision('♫', ConsoleColor.Yellow, ConsoleColor.Green); LevelUpRates(PlusHp, 1, MinDmg, MaxDmg); break;
-                case Class.BloodMage: StartVision('¤', ConsoleColor.Red, ConsoleColor.DarkRed); LevelUpRates(PlusHp, PlusHp, MinDmg, MaxDmg); break;
-                case Class.Engineer: StartVision('☼', ConsoleColor.DarkYellow, ConsoleColor.Black); LevelUpRates(PlusHp, 4, MinDmg, MaxDmg); break;
-                case Class.Exorcist: StartVision('√', ConsoleColor.Cyan, ConsoleColor.Yellow); LevelUpRates(PlusHp, 2, MinDmg, MaxDmg); break;
-                case Class.FireMage: StartVision('‼', ConsoleColor.Red, ConsoleColor.Yellow); LevelUpRates(PlusHp, 10, MinDmg, MaxDmg); break;
-                case Class.Monk: StartVision('§', ConsoleColor.Yellow, ConsoleColor.Black); LevelUpRates(PlusHp, 5, MinDmg, MaxDmg); break;
-                case Class.Necromancer: StartVision('↨', ConsoleColor.Green, ConsoleColor.DarkMagenta); LevelUpRates(PlusHp, 1, MinDmg, MaxDmg); break;
-                case Class.Paladin: StartVision('P', ConsoleColor.Yellow, ConsoleColor.DarkYellow); LevelUpRates(PlusHp, 8, MinDmg, MaxDmg); break;
-                case Class.Rogue: StartVision('&', ConsoleColor.Green, ConsoleColor.Black); LevelUpRates(PlusHp, 1, MinDmg, MaxDmg); break;
-                case Class.Shaman: StartVision('@', ConsoleColor.Blue, ConsoleColor.DarkGray); LevelUpRates(PlusHp, 25, MinDmg, MaxDmg); break;
-                case Class.Warrior: StartVision('☻', ConsoleColor.Red, ConsoleColor.Black); LevelUpRates(PlusHp, 0, MinDmg, MaxDmg); break;
+                case Class.Alchemist:
+                    SPUniq("Elements", ConsoleColor.Magenta, 25);
+                    StartVision('@', ConsoleColor.Magenta, ConsoleColor.Yellow); LevelUpRates(PlusHp, 1, MinDmg, MaxDmg); break;
+                case Class.Bard: 
+                    StartVision('♫', ConsoleColor.Yellow, ConsoleColor.Green); LevelUpRates(PlusHp, 1, MinDmg, MaxDmg); break;
+                case Class.BloodMage:
+                    SPUniq("Blood", ConsoleColor.DarkRed, State.Current.Hero.Mhp);
+                    State.Current.Hero.Csp.OnSet((Int32 Prev) =>
+                        {
+                            State.Current.Hero.Chp -= Prev;
+                            return Prev;
+                        });
+                    StartVision('¤', ConsoleColor.Red, ConsoleColor.DarkRed); LevelUpRates(PlusHp, PlusHp, MinDmg, MaxDmg); break;
+                case Class.Engineer: 
+                    StartVision('☼', ConsoleColor.DarkYellow, ConsoleColor.Black); LevelUpRates(PlusHp, 4, MinDmg, MaxDmg); break;
+                case Class.Exorcist:
+                    StartVision('√', ConsoleColor.Cyan, ConsoleColor.Yellow); LevelUpRates(PlusHp, 2, MinDmg, MaxDmg); break;
+                case Class.FireMage:
+                    SPUniq("Mana", ConsoleColor.Blue, 200);
+                    StartVision('‼', ConsoleColor.Red, ConsoleColor.Yellow); LevelUpRates(PlusHp, 10, MinDmg, MaxDmg); break;
+                case Class.Monk: 
+                    StartVision('§', ConsoleColor.Yellow, ConsoleColor.Black); LevelUpRates(PlusHp, 5, MinDmg, MaxDmg); break;
+                case Class.Necromancer: 
+                    StartVision('↨', ConsoleColor.Green, ConsoleColor.DarkMagenta); LevelUpRates(PlusHp, 1, MinDmg, MaxDmg); break;
+                case Class.Paladin:
+                    SPUniq("Mana", ConsoleColor.Blue, 100);
+                    State.Current.Hero.Chp.OnSet((Int32 Prev) =>
+                    {
+                        if (State.Current.Hero.Chp.Int()-Prev<=0)
+                        {
+                            if (State.Current.Hero.Csp.Int()-Prev>=0)
+                            {
+                                State.Current.Hero.Csp -= Prev;
+                                DrawerLine Line = new DrawerLine();
+                                Line.DefaultForegroundColor = ConsoleColor.Blue;
+                                Line.DefaultBackgroundColor = ConsoleColor.White;
+                                Line += "Mana shield absorbed fatal damage.";
+                                Temp.State.Current.Chat.Message(Line);
+                                return 0;
+                            }
+                        }
+                        return Prev;
+                    });
+                    StartVision('P', ConsoleColor.Yellow, ConsoleColor.DarkYellow); LevelUpRates(PlusHp, 8, MinDmg, MaxDmg); break;
+                case Class.Rogue:
+                    SPUniq("Poison", ConsoleColor.Green, 3);
+                    Input.OnInput += () =>
+                    {
+                        if (State.Random.Next(4) == 0)
+                            if (State.Current.Hero.Csp.Int() < State.Current.Hero.Msp.Int())
+                            {
+                                State.Current.Hero.Csp += 1;
+                                State.Current.Chat.Message(new DrawerLine("You find out what to cook poison!", ConsoleColor.Green));
+                            }
+                    };
+                    StartVision('&', ConsoleColor.Green, ConsoleColor.Black); LevelUpRates(PlusHp, 0, MinDmg, MaxDmg); break;
+                case Class.Shaman: 
+                    StartVision('@', ConsoleColor.Blue, ConsoleColor.DarkGray); LevelUpRates(PlusHp, 25, MinDmg, MaxDmg); break;
+                case Class.Warrior: 
+                    StartVision('☻', ConsoleColor.Red, ConsoleColor.Black); LevelUpRates(PlusHp, 0, MinDmg, MaxDmg); break;
                 default: break;
             }
+        }
+        private static void SPUniq(String Name, ConsoleColor Color, Int32 StartSp)
+        {
+              State.Current.Hero.SPColor = Color;
+              State.Current.Hero.SPName = Name;
+              State.Current.Hero.Csp.CleanInt(StartSp);
+              State.Current.Hero.Msp.CleanInt(StartSp);
         }
 
         private static void LevelUpRates(Int32 PlusHp, Int32 PlusSp, Int32 MinDmg, Int32 MaxDmg)
@@ -137,14 +196,16 @@ namespace Dungeon12OneYearAnniversary.Activity
 
                 if ((Race)State.Current.Hero.Class.Enum() == Race.Undead)
                 {
-                    State.Current.Hero.MinDmg.CleanInt(UndeadSpecialMinDmg());
-                    State.Current.Hero.MaxDmg.CleanInt(UndeadSpecialMaxDmg());
+                    State.Current.Hero.MinDmg.CleanInt(State.Current.Hero.MinDmg.Int() + UndeadSpecialMinDmg());
+                    State.Current.Hero.MaxDmg.CleanInt(State.Current.Hero.MaxDmg.Int() + UndeadSpecialMaxDmg());
                 }
                 else
                 {
-                    State.Current.Hero.MinDmg.CleanInt(MinDmg);
-                    State.Current.Hero.MaxDmg.CleanInt(MaxDmg);
+                    State.Current.Hero.MinDmg.CleanInt(State.Current.Hero.MinDmg.Int() + MinDmg);
+                    State.Current.Hero.MaxDmg.CleanInt(State.Current.Hero.MinDmg.Int() + MaxDmg);
                 }
+
+                State.Current.Hero.Mexp.CleanInt((Int32)(State.Current.Hero.Cexp.Int() * 2.2454425446));
 
                 LevelUpMessage lumsg = new LevelUpMessage();
 
@@ -155,6 +216,11 @@ namespace Dungeon12OneYearAnniversary.Activity
                 lumsg.MaxDmg = MaxDmg.ToString();
 
                 lumsg.Run();
+
+                Console.Clear();
+                State.Current.Info.Draw();
+                State.Current.Display.Draw();
+                State.Current.Chat.DrawTitleCustom();
             };
         }
         private static Int32 UndeadSpecialMinDmg()

@@ -13,7 +13,7 @@ namespace Dungeon12OneYearAnniversary.Objects.Monsters.Exemples
     internal sealed class EvilSinger : BMonster, IThing
     {
         public EvilSinger()
-            : base(0.9, 1.3, 0.1, 2, 3, 37)
+            : base(0.9, 1.3, 0.1, 1, 3, 37)
         { }
 
         public Coord Position { get; set; }

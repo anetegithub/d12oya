@@ -7,51 +7,77 @@ using System.Threading.Tasks;
 using Dungeon12OneYearAnniversary.Objects;
 using Dungeon12OneYearAnniversary.Objects.Monsters;
 using Dungeon12OneYearAnniversary.Menu;
+using Dungeon12OneYearAnniversary.Skills;
 
 namespace Dungeon12OneYearAnniversary.Temp
 {
     internal static class AttackManager
     {
-        internal static void Attack()
+        internal static void Attack(ISkill Skill = null)
         {
-            var HeroPos = State.Current.Hero.Position;
-            var NearFields = (from a in State.Current.GameField.Map.Cast<IThing>()
-                              where (Math.Abs(a.Position.X - HeroPos.X) <= 1) && (Math.Abs(a.Position.Y - HeroPos.Y) <= 1) && Extensions.GetInterface(a, typeof(IAttackable))
-                              select a).ToList();
-            NearFields.Remove(State.Current.Hero);
-            if (NearFields.Count == 1)
+            if (Skill != null && (Skill.Type == SkillType.SelfBuff || Skill.Type == SkillType.Heal))
+                Skill.Use(State.Current.Hero);
+            else
             {
-                DealDamage(NearFields[0]);
-            }
-            else if (NearFields.Count > 1)
-            {
-                var Pos = HeroPos;
-                var Enemy = new List<IThing>();
-                while (Pos == HeroPos)
+                var HeroPos = State.Current.Hero.Position;
+                var NearFields = (from a in State.Current.GameField.Map.Cast<IThing>()
+                                  where (Math.Abs(a.Position.X - HeroPos.X) <= 1) && (Math.Abs(a.Position.Y - HeroPos.Y) <= 1) && Extensions.GetInterface(a, typeof(IAttackable))
+                                  select a).ToList();
+                NearFields.Remove(State.Current.Hero);
+
+                //aoe skills
+                if (Skill != null)
                 {
-                    State.Current.Chat.Message(new IO.DrawerLine(IO.DCLine.New("Choose attack direction by numpad numbers (5 - you)", ConsoleColor.White, ConsoleColor.Red)));
-                    switch (Console.ReadKey(true).Key)
+                    if (NearFields.Count > 0 && Skill.Type == SkillType.AoE)
                     {
-                        case ConsoleKey.NumPad7: { Pos.X -= 1; Pos.Y -= 1; break; }
-                        case ConsoleKey.NumPad8: { Pos.Y -= 1; break; }
-                        case ConsoleKey.NumPad9: { Pos.X += 1; Pos.Y -= 1; break; }
-                        case ConsoleKey.NumPad4: { Pos.X -= 1; break; }
-                        case ConsoleKey.NumPad6: { Pos.X += 1; break; }
-                        case ConsoleKey.NumPad1: { Pos.X -= 1; Pos.Y += 1; break; }
-                        case ConsoleKey.NumPad2: { Pos.Y += 1; break; }
-                        case ConsoleKey.NumPad3: { Pos.X += 1; Pos.Y += 1; break; }
-                        default: break;
+                        foreach (var Enemy in NearFields)
+                            Skill.Use((ITargetable)Enemy);
                     }
-                    Enemy = (from a in NearFields where a.Position == Pos select a).ToList();
-                    if ((from a in NearFields where a.Position == Pos select a).Count() != 1)
-                        Pos = HeroPos;
                 }
-                DealDamage(Enemy[0]);
+
+                if (NearFields.Count == 1)
+                {
+                    if (Skill == null)
+                        DealDamage(NearFields[0]);
+                    else
+                        Skill.Use((ITargetable)NearFields[0]);
+                }
+                else if (NearFields.Count > 1)
+                {
+                    var Pos = HeroPos;
+                    var Enemy = new List<IThing>();
+                    while (Pos == HeroPos)
+                    {
+                        State.Current.Chat.Message(new IO.DrawerLine(IO.DCLine.New("Choose attack direction by numpad numbers (5 - you)", ConsoleColor.White, ConsoleColor.Red)));
+                        switch (Console.ReadKey(true).Key)
+                        {
+                            case ConsoleKey.NumPad7: { Pos.X -= 1; Pos.Y -= 1; break; }
+                            case ConsoleKey.NumPad8: { Pos.Y -= 1; break; }
+                            case ConsoleKey.NumPad9: { Pos.X += 1; Pos.Y -= 1; break; }
+                            case ConsoleKey.NumPad4: { Pos.X -= 1; break; }
+                            case ConsoleKey.NumPad6: { Pos.X += 1; break; }
+                            case ConsoleKey.NumPad1: { Pos.X -= 1; Pos.Y += 1; break; }
+                            case ConsoleKey.NumPad2: { Pos.Y += 1; break; }
+                            case ConsoleKey.NumPad3: { Pos.X += 1; Pos.Y += 1; break; }
+                            default: break;
+                        }
+                        Enemy = (from a in NearFields where a.Position == Pos select a).ToList();
+                        if ((from a in NearFields where a.Position == Pos select a).Count() != 1)
+                            Pos = HeroPos;
+                    }
+                    if (Skill == null)
+                        DealDamage(Enemy[0]);
+                    else
+                        Skill.Use((ITargetable)Enemy[0]);
+                }
             }
         }
 
         private static void DealDamage(IThing Target)
         {
+            if (OnDealDamage != null)
+                Target = OnDealDamage(Target);
+
             Int32 Armor = 0;
 
             if (Extensions.GetInterface(Target, typeof(IDefender)))
@@ -74,5 +100,8 @@ namespace Dungeon12OneYearAnniversary.Temp
             State.Current.Chat.Message(Line);
             State.Current.GameField.Activate(State.Current.Hero.Position);
         }
+
+        public static event OnDealDamageGetter OnDealDamage;
+        public delegate IThing OnDealDamageGetter(IThing Target);
     }
 }

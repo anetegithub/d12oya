@@ -25,7 +25,7 @@ namespace Dungeon12OneYearAnniversary.Activity
 
             StatDisplay(Hero);
             Console.ReadKey(true);
-            Game.Run();
+            Init.Run();
         }
 
         private static void NewGameMenu()
@@ -69,7 +69,9 @@ namespace Dungeon12OneYearAnniversary.Activity
         {
             Select sel = new Select();
             sel.Title = new Option() { Text = "Hero race:", Back = ConsoleColor.Black, Color = ConsoleColor.Magenta };
-            foreach (Class Value in Enum.GetValues(typeof(Class)).Cast<Class>())
+            List<Class> Available = new List<Class>() { Class.Alchemist, Class.BloodMage, Class.FireMage, Class.Paladin, Class.Rogue };
+
+            foreach (Class Value in Available)//Enum.GetValues(typeof(Class)).Cast<Class>())
             {
                 sel.Options.Add(new Option()
                 {

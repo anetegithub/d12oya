@@ -98,6 +98,12 @@ namespace Dungeon12OneYearAnniversary.Map
                             else
                                 _Map[Coord.X, Coord.Y] = new EThing();
 
+                                if (_Map[Coord.X, Coord.Y - 1].GetType() == typeof(Trap))
+                                {
+                                    (_Map[Coord.X, Coord.Y - 1] as Trap).Activate(Temp);
+                                    _Map[Coord.X + 1, Coord.Y] = new EThing();
+                                }
+
                             Temp.Bag = _Map[Coord.X, Coord.Y - 1];
                             _Map[Coord.X, Coord.Y - 1] = Temp;
                             NewValue = new Coord() { X = Coord.X, Y = Coord.Y - 1 };
@@ -113,6 +119,13 @@ namespace Dungeon12OneYearAnniversary.Map
                                 _Map[Coord.X, Coord.Y] = _Map[Coord.X, Coord.Y].Bag;
                             else
                                 _Map[Coord.X, Coord.Y] = new EThing();
+
+                            if (_Map[Coord.X, Coord.Y + 1].GetType() == typeof(Trap))
+                            {
+                                (_Map[Coord.X, Coord.Y + 1] as Trap).Activate(Temp);
+                                _Map[Coord.X, Coord.Y + 1] = new EThing();
+                            }
+
                             Temp.Bag = _Map[Coord.X, Coord.Y + 1];
                             _Map[Coord.X, Coord.Y + 1] = Temp;
                             NewValue = new Coord() { X = Coord.X, Y = Coord.Y + 1 };
@@ -128,6 +141,13 @@ namespace Dungeon12OneYearAnniversary.Map
                                 _Map[Coord.X, Coord.Y] = _Map[Coord.X, Coord.Y].Bag;
                             else
                                 _Map[Coord.X, Coord.Y] = new EThing();
+
+                            if (_Map[Coord.X - 1, Coord.Y].GetType() == typeof(Trap))
+                            {
+                                (_Map[Coord.X - 1, Coord.Y] as Trap).Activate(Temp);
+                                _Map[Coord.X - 1, Coord.Y] = new EThing();
+                            }
+
                             Temp.Bag = _Map[Coord.X - 1, Coord.Y];
                             _Map[Coord.X - 1, Coord.Y] = Temp;
                             NewValue = new Coord() { X = Coord.X - 1, Y = Coord.Y };
@@ -143,6 +163,13 @@ namespace Dungeon12OneYearAnniversary.Map
                                 _Map[Coord.X, Coord.Y] = _Map[Coord.X, Coord.Y].Bag;
                             else
                                 _Map[Coord.X, Coord.Y] = new EThing();
+
+                            if (_Map[Coord.X + 1, Coord.Y].GetType() == typeof(Trap))
+                            {
+                                (_Map[Coord.X + 1, Coord.Y] as Trap).Activate(Temp);
+                                _Map[Coord.X + 1, Coord.Y] = new EThing();
+                            }
+
                             Temp.Bag = _Map[Coord.X + 1, Coord.Y];
                             _Map[Coord.X + 1, Coord.Y] = Temp;
                             NewValue = new Coord() { X = Coord.X + 1, Y = Coord.Y };
@@ -206,6 +233,7 @@ namespace Dungeon12OneYearAnniversary.Map
                 return (ConsoleKey)State.Random.Next(37, 41);
         }
 
+
         public void DropItem()
         {
             Coord Place = new Coord();
@@ -218,10 +246,29 @@ namespace Dungeon12OneYearAnniversary.Map
             }
             DropItem(Place);
         }
-
         public void DropItem(Coord Place)
         {
             Map[Place.X, Place.Y] = Mapped.GetRandom();
+            Map[Place.X, Place.Y].Position = Place;
+            Draw();
+        }
+        public void DropItem(Coord Place, IThing Item)
+        {
+            Map[Place.X, Place.Y] = Item;
+            Map[Place.X, Place.Y].Position = Place;
+            Draw();
+        }
+        public void DropUsefullItem()
+        {
+            Coord Place = new Coord();
+            Boolean Droppable = false;
+            while (!Droppable)
+            {
+                Place = new Coord() { X = State.Random.Next(68), Y = State.Random.Next(29) };
+                if (Map[Place.X, Place.Y].GetType() == typeof(Objects.Mapped.EThing))
+                    Droppable = true;
+            }
+            Map[Place.X, Place.Y] = Mapped.GetRandomUsefull();
             Map[Place.X, Place.Y].Position = Place;
             Draw();
         }

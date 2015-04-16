@@ -13,7 +13,7 @@ namespace Dungeon12OneYearAnniversary.Objects.Monsters.Exemples
     internal sealed class Dragon : BMonster, IThing
     {
         public Dragon()
-            : base(1.7, 0.5, 0.5, 3, 6, 75)
+            : base(1.7, 0.5, 0.5, 2, 3, 75)
         { }
 
         public Coord Position { get; set; }

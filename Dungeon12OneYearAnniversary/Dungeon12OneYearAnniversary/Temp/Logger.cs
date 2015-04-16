@@ -13,5 +13,7 @@ namespace Dungeon12OneYearAnniversary.Temp
         private static List<DrawerLine> Log = new List<DrawerLine>();
         public static void Add(DrawerLine Line)
         { Log.Add(Line); }
+        public static List<DrawerLine> GetLog()
+        { return Log; }
     }
 }

@@ -111,7 +111,7 @@ namespace Dungeon12OneYearAnniversary.Components
 
         public void MessageMin(DrawerLine Msg)
         {
-            Logger.Add(Msg);
+            //Logger.Add(Msg);
 
             LastMiniLines.Insert(0, Msg);
             LastMiniLines.RemoveRange(10, 1);

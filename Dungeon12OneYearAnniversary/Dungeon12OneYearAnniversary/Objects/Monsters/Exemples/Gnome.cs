@@ -13,7 +13,7 @@ namespace Dungeon12OneYearAnniversary.Objects.Monsters.Exemples
     internal sealed class Gnome : BMonster, IThing
     {
         public Gnome()
-            : base(0.7, 0, 0.4, 2, 3, 15)
+            : base(0.7, 0, 0.4, 1, 3, 15)
         { }
 
         public Coord Position { get; set; }

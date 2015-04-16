@@ -13,7 +13,7 @@ namespace Dungeon12OneYearAnniversary.Objects.Mapped
     {
         public HealRune()
         {
-            _Hp = State.Current.Hero.Level;
+            _Hp = State.Current.Hero.Level*7;
             State.Current.Chat.Message(new IO.DrawerLine(IO.DCLine.New("There was a red rune!", ConsoleColor.Red, ConsoleColor.White)));
         }
 

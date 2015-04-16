@@ -10,13 +10,11 @@ namespace Dungeon12OneYearAnniversary.Skills
 {
     internal interface ISkill : IThing
     {
+        SkillType Type { get; }
         Int32 Level { get; }
         void Use(ITargetable Target);
         void LevelUp();
     }
 
-    internal static class ISkillExtension
-    {
-        internal static ISkill Null(this ISkill Skill) { return null; }
-    }
+    internal enum SkillType { Attack = 0, SelfBuff = 1, Debuff = 2, AoE = 3, Heal = 4, Passive = 5 }
 }

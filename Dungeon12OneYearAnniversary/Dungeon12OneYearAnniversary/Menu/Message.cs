@@ -32,7 +32,7 @@ namespace Dungeon12OneYearAnniversary.Menu
             con.AppendLine(new DrawerLine("#                  Left Arrow : Move hero to the left                 #", ConsoleColor.DarkGreen));
             con.AppendLine(new DrawerLine("#                 Right Arrow : Move hero to the right                #", ConsoleColor.DarkGreen));
             con.AppendLine(new DrawerLine("#                                                                     #", ConsoleColor.DarkGreen));
-            con.AppendLine(new DrawerLine("#                         F : Info about object                       #", ConsoleColor.DarkGreen));
+            con.AppendLine(new DrawerLine("#                      L : Info about near objects                    #", ConsoleColor.DarkGreen));
             con.AppendLine(new DrawerLine("#                      Enter : Take/Activate object                   #", ConsoleColor.DarkGreen));
             con.AppendLine(new DrawerLine("#                                                                     #", ConsoleColor.DarkGreen));
             con.AppendLine(new DrawerLine("#                            A : Hit object                           #", ConsoleColor.DarkGreen));
@@ -40,6 +40,8 @@ namespace Dungeon12OneYearAnniversary.Menu
             con.AppendLine(new DrawerLine("#                          W : Use 2 ability                          #", ConsoleColor.DarkGreen));
             con.AppendLine(new DrawerLine("#                          E : Use 3 ability                          #", ConsoleColor.DarkGreen));
             con.AppendLine(new DrawerLine("#                          R : Use 4 ability                          #", ConsoleColor.DarkGreen));
+            con.AppendLine(new DrawerLine("#                                                                     #", ConsoleColor.DarkGreen));
+            con.AppendLine(new DrawerLine("#                         Esc : Exit and Save                         #", ConsoleColor.DarkGreen));
             con.AppendLine(new DrawerLine("#                                                                     #", ConsoleColor.DarkGreen));
             con.AppendLine(new DrawerLine("#                              Good luck!                             #", ConsoleColor.DarkGreen));
             con.AppendLine(new DrawerLine("#                                                                     #", ConsoleColor.DarkGreen));

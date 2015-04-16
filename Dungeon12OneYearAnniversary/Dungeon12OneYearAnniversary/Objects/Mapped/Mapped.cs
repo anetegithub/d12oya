@@ -32,5 +32,16 @@ namespace Dungeon12OneYearAnniversary.Objects.Mapped
                     default: return new Gold();
                 }
         }
+
+        public static IThing GetRandomUsefull()
+        {
+            if (State.Random.Next(2) == 0)
+                return new Gold();
+            else
+                if (State.Random.Next(2) == 0)
+                    return new HealRune();
+                else
+                    return new ResourceRune();
+        }
     }
 }

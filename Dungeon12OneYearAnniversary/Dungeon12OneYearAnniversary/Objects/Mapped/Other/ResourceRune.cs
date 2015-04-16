@@ -13,7 +13,7 @@ namespace Dungeon12OneYearAnniversary.Objects.Mapped
     {
         public ResourceRune()
         {
-            _Sp = State.Current.Hero.Level;
+            _Sp = State.Current.Hero.Level*3;
             State.Current.Chat.Message(new IO.DrawerLine(IO.DCLine.New("There was a resource rune!", ConsoleColor.Red, ConsoleColor.White)));
         }
 
