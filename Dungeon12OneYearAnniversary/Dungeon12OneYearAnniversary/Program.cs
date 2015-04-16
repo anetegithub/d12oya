@@ -39,7 +39,7 @@ namespace Dungeon12OneYearAnniversary
             int ypos = 170;
             SetWindowPos(MyConsole, 0, xpos, ypos, 0, 0, SWP_NOSIZE);
 
-            Console.Title = "Dungeon 12 One Year Anniversary";
+            Console.Title = "Dungeon 12 One Year Anniversary (Marathon)";
 
             Start();
 
