@@ -95,7 +95,7 @@ namespace Dungeon12OneYearAnniversary.Activity
             sel.Options = new List<Option>()
             {
                 new Option(){ Text="New game", CloseAfterClick=true, Color= ConsoleColor.Yellow, Back= ConsoleColor.Black, Click=()=>{Run();}},
-                new Option(){ Text="Load", CloseAfterClick=true, Color= ConsoleColor.DarkYellow, Back= ConsoleColor.Black, Click=()=>{ LoadMenu();}},
+                //new Option(){ Text="Load", CloseAfterClick=true, Color= ConsoleColor.DarkYellow, Back= ConsoleColor.Black, Click=()=>{ LoadMenu();}},
                 new Option(){ Text="Exit", CloseAfterClick=true, Color= ConsoleColor.Gray, Back= ConsoleColor.Black, Click=()=>{Environment.Exit(0);}}
             };
             sel.Run();

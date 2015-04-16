@@ -90,6 +90,17 @@ namespace Dungeon12OneYearAnniversary.IO
                                 Environment.Exit(0);
                             }
                         });
+                        S.Options.Add(new Controls.Option()
+                        {
+                            Color = ConsoleColor.Gray,
+                            Back = ConsoleColor.Black,
+                            Text = "Exi",
+                            CloseAfterClick = true,
+                            Click = () =>
+                            {
+                                Environment.Exit(0);
+                            }
+                        });
                         S.Run();
                         break;
                     }
